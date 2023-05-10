@@ -1,20 +1,10 @@
-# Project Setup
+# Project questions
 
-* You can import the project directly from a *Version Control System*, by providing the following URL: 
-*https://ewserver.di.unimi.it/gitlab/luca.arrotta/project_setup.git*
+In class Robot is it necessary to check the requests
+passing through the server? 
+So: client enter ID -> server -> check into server
+-> response to the client ...
 
-<img src = './assets/img_1.png'>
-
-* Otherwise, take care to import the project as a Gradle Project
-
-* If required, trust the project and accept the Gradle auto-import
-
-* Wait until the Gradle indexing process ends (it may take a few seconds)
-
-
-
-## ENJOY THE PROJECT!
-
-<img src = './assets/meme.jpg' width="350" height="500">
-
-
+In class AdminClient how do I call the method showListOfRobots?
+Do I have to create an AdminClient ac = new AdminClient()? 
+Is it useful and correct?

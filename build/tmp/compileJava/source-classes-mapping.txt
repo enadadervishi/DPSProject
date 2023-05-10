@@ -1,2 +1,14 @@
 Main.java
  Main
+administratorServer/Server.java
+ administratorServer.Server
+cleaningRobots/services/CleaningRobotsService.java
+ cleaningRobots.services.CleaningRobotsService
+cleaningRobots/beans/Robot.java
+ cleaningRobots.beans.Robot
+cleaningRobots/RobotClient.java
+ cleaningRobots.RobotClient
+cleaningRobots/beans/Robots.java
+ cleaningRobots.beans.Robots
+administratorClient/AdminClient.java
+ administratorClient.AdminClient
