@@ -20,6 +20,7 @@ public class CleaningRobotsService {
     @POST
     @Consumes({"application/json", "application/xml"})
     public Response addRobot(Robot r){
+        System.out.println("CLEANING ROBOTS SERVICE");
         Robots.getInstance().postRobot(r);
         return Response.ok().build();
     }

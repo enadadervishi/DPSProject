@@ -20,7 +20,7 @@ public class Robots {
 
     private static Robots instance;
 
-    private Robots() {
+    public Robots() {
         robotsList = new ArrayList<>();
     }
 
@@ -49,7 +49,7 @@ public class Robots {
     public String getAPLevelsRobot(String t){
         List<Robot> robotsCopy = getRobotsList();
         for(Robot w: robotsCopy)
-            if(w.getID().equalsIgnoreCase(t))
+            if(w.getId().equalsIgnoreCase(t))
                 return w.getTestToGetAirPollution();
         return null;
     }

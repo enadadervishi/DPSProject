@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Robot {
 
-    private String ID;
+    private String id;
     private int port;
     private String serverAddress;
 
@@ -25,13 +25,33 @@ public class Robot {
 
     public Robot() {}
 
-    public Robot(String ID, int port, String serverAddress) {
-        this.ID = ID;
+    public Robot(String id, int port, String serverAddress) {
+        this.id = id;
         this.port = port;
         this.serverAddress = serverAddress;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getPort() {
+        return port;
+    }
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getServerAddress() {
+        return serverAddress;
+    }
+    public void setServerAddress(String serverAddress) {
+        this.serverAddress = serverAddress;
+    }
+
+
+
 }
