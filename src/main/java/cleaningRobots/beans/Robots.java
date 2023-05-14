@@ -39,9 +39,15 @@ public class Robots {
     }
 
     public synchronized void postRobot(Robot r){
-        System.out.println("Added the robot in the list");
-        robotsList.add(r);
+        if(checkId(this.robotsList,r)&&(checkPort(this.robotsList,r))){
+            System.out.println("[from postRobot] Added the robot in the list");
+            robotsList.add(r);
+        }else {
+            System.out.println("[from postRobot] NOT added");
+        }
+
     }
+
     //public synchronized void deleteRobot(Robot w){
         //robotsList.remove(w);
     //}
@@ -53,4 +59,28 @@ public class Robots {
                 return w.getTestToGetAirPollution();
         return null;
     }
+
+    public synchronized boolean checkId(List<Robot> list, Robot newRobot){
+        for(Robot rob : list){
+            if(rob.getId().equals(newRobot.getId()))
+            {
+                System.out.println("    [from checkId method] ID already used");
+                return false;
+            }
+        }
+        System.out.println("    [from checkId method] ID available");
+        return true;
+    }
+
+    public synchronized boolean checkPort(List<Robot> list, Robot newRobot){
+        for(Robot rob: list){
+            if (rob.getPort() == newRobot.getPort()){
+                System.out.println("    [from checkPort method] PORT already used");
+                return false;
+            }
+        }
+        System.out.println("    [from checkPort method] Correct port");
+        return true;
+    }
+
 }

@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Robot {
 
+    private String serverAddress;
     private String id;
     private int port;
-    private String serverAddress;
 
     public String getTestToGetAirPollution() {
         // and more vars like: maintenance (boolean), position (coordinates <X> & <Y>), air pollution...
@@ -25,10 +25,10 @@ public class Robot {
 
     public Robot() {}
 
-    public Robot(String id, int port, String serverAddress) {
+    public Robot(String serverAddress, String id, int port ) {
+        this.serverAddress = serverAddress;
         this.id = id;
         this.port = port;
-        this.serverAddress = serverAddress;
     }
 
     public String getId() {
@@ -51,7 +51,6 @@ public class Robot {
     public void setServerAddress(String serverAddress) {
         this.serverAddress = serverAddress;
     }
-
 
 
 }

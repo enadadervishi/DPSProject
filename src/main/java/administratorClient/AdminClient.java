@@ -1,16 +1,15 @@
 package administratorClient;
 
+import cleaningRobots.beans.Robot;
 import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+
+import static requestHandler.RequestHandler.*;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Socket;
 
 /**
  * This application prints a straightforward menu to select one of the services offered
@@ -23,15 +22,14 @@ import java.net.Socket;
 public class AdminClient {
 
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private static final String serverAddress = "http://localhost:8888";
 
     public static void main(String[] args) throws IOException {
 
         Client client = Client.create();
-        String serverAddress = "http://localhost:8888";
-        ClientResponse clientResponse;
+        ClientResponse response;
 
         String choicePath;
-
 
         while(true){
             System.out.println("Please select a number from the menu: ");
@@ -48,14 +46,17 @@ public class AdminClient {
 
                     // the choice result should be sent from the server?
                     choicePath = "/cleaning_robots/list";
-                    clientResponse = getRequest(client, serverAddress + choicePath);
+                    response = getRequest(client, serverAddress + choicePath);
 
                     try {
-                        System.out.println(clientResponse.toString());
-                        Robots robotsResponse = clientResponse.getEntity(Robots.class);
-                        System.out.println("List of robots " + robotsResponse.getRobotsList().toString());
+                        System.out.println(response.toString());
+                        Robots robotsResponse = response.getEntity(Robots.class);
+                        System.out.println("List of robots: ");
+                        for(Robot l: robotsResponse.getRobotsList()){
+                            System.out.println("\nID: "+l.getId()+"\nPort: "+l.getPort() +"\nServer address: "+ l.getServerAddress());
+                        }
                     } catch (NullPointerException e) {
-                        System.out.println("clientResponse: " + clientResponse);
+                        System.out.println("response: " + response);
                     }
 
                     break;
@@ -85,24 +86,12 @@ public class AdminClient {
         GET REQUEST #2
         System.out.println("What word are you looking for? ");
         String getWordPath = "/words/get/"+bufferedReader.readLine();
-        clientResponse = getRequest(client,serverAddress+getWordPath);
-        System.out.println(clientResponse.toString());
-        Word wordResponse = clientResponse.getEntity(Word.class);
+        response = getRequest(client,serverAddress+getWordPath);
+        System.out.println(response.toString());
+        Word wordResponse = response.getEntity(Word.class);
         System.out.println("Term: " + wordResponse.getTerm() + " Definition: " + wordResponse.getDefinition());
         */
 
-
-    }
-
-
-    public static ClientResponse getRequest(Client client, String url){
-        WebResource webResource = client.resource(url);
-        try {
-            return webResource.type("application/json").get(ClientResponse.class);
-        } catch (ClientHandlerException e) {
-            System.out.println("[getRequest AdminClient] Server not available");
-            return null;
-        }
     }
 
 }
