@@ -17,10 +17,13 @@ public class Robot {
     private String id;
     private int port;
 
+    private int[] coordinates;
+    private int district;
+
     public String getTestToGetAirPollution() {
         // and more vars like: maintenance (boolean), position (coordinates <X> & <Y>), air pollution...
         String testToGetAirPollution = "COOL";
-        return testToGetAirPollution;
+        return testToGetAirPollution+" TRY";
     }
 
     public Robot() {}
@@ -29,6 +32,7 @@ public class Robot {
         this.serverAddress = serverAddress;
         this.id = id;
         this.port = port;
+        this.coordinates = new int[2];
     }
 
     public String getId() {
@@ -52,5 +56,20 @@ public class Robot {
         this.serverAddress = serverAddress;
     }
 
+    public int[] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(int[] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public int getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(int district) {
+        this.district = district;
+    }
 
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class AdminServer {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 8888;
+    private static final int PORT = 9999;
 
 
     public static void main(String[] args) throws IOException {

@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import static requestHandler.RequestHandler.*;
 
@@ -36,7 +37,6 @@ public class RobotClient {
         Robot newR = robotClient.signIn(robotClient.serverAdr);
         robotClient.response = getRequest(client, newR.getServerAddress() + getPath);
         Robots otherRobots = robotClient.response.getEntity(Robots.class);
-        robotClient.printAllRobots(otherRobots);
         robotClient.postNewRobot(client, postPath, newR);
 
         for(Robot allRobs: otherRobots.getRobotsList()){
@@ -51,7 +51,6 @@ public class RobotClient {
                 robotClient.response = getRequest(client, newR.getServerAddress() + getPath);
 
                 otherRobots = robotClient.response.getEntity(Robots.class);
-                robotClient.printAllRobots(otherRobots);
                 robotClient.postNewRobot(client, postPath, newR);
             }
         }
@@ -70,7 +69,7 @@ public class RobotClient {
             Thread.sleep(40000);
 
         System.out.println("Removing "+ newR.getId() + "...");
-        robotClient.deleteActualRobot(client, newR.getServerAddress()+ "/cleaning_robots/remove", newR); //,newR.getId()
+        robotClient.deleteActualRobot(client, newR.getServerAddress()+ "/cleaning_robots/remove", newR);
 
     }
 
@@ -111,7 +110,10 @@ public class RobotClient {
 
     public void printAllRobots(Robots list) {
         for(Robot l: list.getRobotsList()){
-            System.out.println("ID: "+l.getId()+" Port: "+l.getPort() +" Server address: "+ l.getServerAddress());
+            System.out.println("ID: "+l.getId()+" Port: "+l.getPort()
+                    +" Server address: "+ l.getServerAddress()
+                    +" Coordinates: "+ Arrays.toString(l.getCoordinates())
+                    +" District: "+ l.getDistrict());
         }
     }
 
