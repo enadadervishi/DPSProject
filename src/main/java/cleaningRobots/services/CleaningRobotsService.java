@@ -24,6 +24,14 @@ public class CleaningRobotsService {
         return Response.ok().build();
     }
 
+    @Path("remove")
+    @DELETE
+    @Consumes({"application/json", "application/xml"})
+    public Response removeRobot(Robot r){
+        Robots.getInstance().deleteRobot(r);
+        return Response.ok().build();
+    }
+
     @Path("get/{robot}/air_pollution_level")
     @GET
     @Produces({"application/json", "application/xml"})
@@ -34,7 +42,6 @@ public class CleaningRobotsService {
         else
             return Response.status(Response.Status.NOT_FOUND).build();
     }
-
 
 
 }

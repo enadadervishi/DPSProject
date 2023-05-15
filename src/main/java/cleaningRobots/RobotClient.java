@@ -21,7 +21,7 @@ public class RobotClient {
 
     private ClientResponse response;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         Client client = Client.create();
         RobotClient robotClient = new RobotClient();
@@ -56,8 +56,22 @@ public class RobotClient {
             }
         }
 
-        System.out.println("WELCOME TO GREENFIELD, BELOW A LIST OF ALL CLEANING ROBOTS IN GREENFIELD");
-        robotClient.printAllRobots(otherRobots);
+        System.out.println(newR.getId() +" WELCOME TO GREENFIELD!");
+        if(otherRobots.getRobotsList().isEmpty())
+            System.out.println("You're the first cleaning robot of Greenfield");
+        else{
+            System.out.println("Below a list of all cleaning robots in Greenfield");
+            robotClient.printAllRobots(otherRobots);
+        }
+
+        if(newR.getId().equals("eni"))
+            Thread.sleep(10000);
+        else
+            Thread.sleep(40000);
+
+        System.out.println("Removing "+ newR.getId() + "...");
+        robotClient.deleteActualRobot(client, newR.getServerAddress()+ "/cleaning_robots/remove", newR); //,newR.getId()
+
     }
 
     public Robot signIn(String serverAdd) throws IOException {
@@ -78,6 +92,16 @@ public class RobotClient {
     public void postNewRobot(Client robotC, String postPath, Robot newR) {
         ClientResponse robotCResponse;
         robotCResponse = postRequest(robotC, newR.getServerAddress() + postPath, newR);
+        try {
+            System.out.println(robotCResponse.toString());
+        } catch (NullPointerException ex) {
+            System.out.println("robotCResponse: " + robotCResponse);
+        }
+    }
+
+    public void deleteActualRobot(Client robotC, String deletePath, Robot robot){
+        ClientResponse robotCResponse;
+        robotCResponse = deleteRequest(robotC, deletePath, robot);
         try {
             System.out.println(robotCResponse.toString());
         } catch (NullPointerException ex) {

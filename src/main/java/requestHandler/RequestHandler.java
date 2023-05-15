@@ -30,4 +30,16 @@ public class RequestHandler {
             return null;
         }
     }
+
+    public static ClientResponse deleteRequest(Client client, String url, Robot r){
+        WebResource webResource = client.resource(url);
+        String input = new Gson().toJson(r);
+        try {
+            return webResource.type("application/json").delete(ClientResponse.class,input);
+        } catch (ClientHandlerException e) {
+            System.out.println("    [from deleteRequest] Server not available");
+            return null;
+        }
+    }
+
 }
