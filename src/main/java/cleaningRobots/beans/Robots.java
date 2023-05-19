@@ -8,7 +8,8 @@ import java.util.*;
 
 /**
  * This class wants to represent the list of robots
- * correctly connected to the AdministratorServer
+ * correctly connected to the AdministratorServer.
+ * Practically those methods are directly for the Server
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -56,7 +57,6 @@ public class Robots {
             int d = whereToGo();
             r.setDistrict(d);
             r.setCoordinates(assigningPosition(r.getDistrict()));
-
 
             System.out.println("POSITION: "+ Arrays.toString(r.getCoordinates()));
             System.out.println("DISTRICT: "+ r.getDistrict());

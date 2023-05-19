@@ -4,6 +4,8 @@ import cleaningRobots.beans.Robot;
 import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import mosquitto.publishers.RobotPub;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +24,9 @@ public class RobotClient {
 
     private ClientResponse response;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    private static RobotPub robotPublisher;
+
+    public static void main(String[] args) throws IOException, InterruptedException, MqttException {
 
         Client client = Client.create();
         RobotClient robotClient = new RobotClient();
@@ -48,9 +52,11 @@ public class RobotClient {
                     System.out.println("    PORT already used");
                 }
                 newR = robotClient.signIn(robotClient.serverAdr);
+                /** QUI NON SERVE FARE DUE DIVERSE ROBOTCLIENT.RESPONSE QUI SOTTO: ....*/
                 robotClient.response = getRequest(client, newR.getServerAddress() + getPath);
 
                 otherRobots = robotClient.response.getEntity(Robots.class);
+                /** ... E QUI SOTTO: MERGEALI*/
                 robotClient.postNewRobot(client, postPath, newR);
             }
         }
@@ -63,15 +69,36 @@ public class RobotClient {
             robotClient.printAllRobots(otherRobots);
         }
 
+        //SEARCH FOR N_DISTRICT
+        robotPublisher = new RobotPub(searchForDistrict(newR));
+        robotPublisher.publishing();
+
+
+
         if(newR.getId().equals("eni"))
             Thread.sleep(10000);
         else
             Thread.sleep(40000);
 
+
+
         System.out.println("Removing "+ newR.getId() + "...");
         robotClient.deleteActualRobot(client, newR.getServerAddress()+ "/cleaning_robots/remove", newR);
 
     }
+
+    public static int searchForDistrict(Robot r){
+
+        //Robots.getInstance().getRobotsList();
+        for(Robot l: Robots.getInstance().getRobotsList()){
+            if(l.getId().equals(r.getId()))
+                return l.getDistrict();
+        }
+
+        return 200;
+    }
+
+
 
     public Robot signIn(String serverAdd) throws IOException {
         System.out.println("Now enter an ID: ");

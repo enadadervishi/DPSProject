@@ -3,6 +3,9 @@ package administratorServer;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpsServer;
+import mosquitto.gg.Subscriber;
+import mosquitto.subscribers.AdminSub;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
 
@@ -13,10 +16,12 @@ import java.io.IOException;
 public class AdminServer {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 9999;
+    private static final int PORT = 8888;
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MqttException {
+
+        AdminSub serverSubscriber = new AdminSub();
 
         HttpServer server = HttpServerFactory.create("http://" +HOST+":"+PORT+"/");
         server.start();
@@ -24,7 +29,9 @@ public class AdminServer {
         System.out.println("Administrator Server is now running!");
         System.out.println("Server started on: http://" +HOST+":"+PORT);
 
-        System.out.println("Hit any key to stop...");
+        serverSubscriber.subscription();
+
+        //System.out.println("Hit any key to stop...");
         //System.in.read(); //remember to uncomment
         //System.out.println("Stopping server"); // remember to uncomment
 
@@ -32,6 +39,5 @@ public class AdminServer {
         //System.out.println("Administrator Server stopped");
 
     }
-
 
 }
