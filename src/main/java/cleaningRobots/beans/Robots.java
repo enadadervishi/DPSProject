@@ -155,6 +155,16 @@ public class Robots {
         return true;
     }
 
+
+    public synchronized void printAllRobots_Robots() {
+        for(Robot l: this.robotsList){
+            System.out.println("ID: "+l.getId()+" Port: "+l.getPort()
+                    +" Server address: "+ l.getServerAddress()
+                    +" Coordinates: "+ Arrays.toString(l.getCoordinates())
+                    +" District: "+ l.getDistrict());
+        }
+    }
+
     /** SEE ABOVE ITS USAGE SEARCH JAVADOC IN THIS CLASS
     public synchronized boolean checkPort(List<Robot> list, Robot newRobot){
         for(Robot rob: list){

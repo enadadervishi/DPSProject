@@ -52,9 +52,8 @@ public class AdminClient {
                         System.out.println(response.toString());
                         Robots robotsResponse = response.getEntity(Robots.class);
                         System.out.println("List of robots: ");
-                        for(Robot l: robotsResponse.getRobotsList()){
-                            System.out.println("\nID: "+l.getId()+"\nPort: "+l.getPort() +"\nServer address: "+ l.getServerAddress());
-                        }
+                        robotsResponse.printAllRobots_Robots();
+
                     } catch (NullPointerException e) {
                         System.out.println("response: " + response);
                     }

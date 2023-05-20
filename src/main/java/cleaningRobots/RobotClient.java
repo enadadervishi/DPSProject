@@ -48,7 +48,9 @@ public class RobotClient {
         Robots existingRobots = null;
         if (robotClient.response != null) {
             existingRobots = robotClient.response.getEntity(Robots.class);
-            robotClient.printAllRobots(existingRobots);
+            //robotClient.printAllRobots(existingRobots);
+            existingRobots.printAllRobots_Robots();
+
         }
 
 
@@ -81,7 +83,8 @@ public class RobotClient {
                 System.out.println("You're the first cleaning robot of Greenfield");
             else{
                 System.out.println("Below a list of all cleaning robots in Greenfield");
-                robotClient.printAllRobots(existingRobots);
+                existingRobots.printAllRobots_Robots();
+                //robotClient.printAllRobots(existingRobots);
             }
         }
 
@@ -105,7 +108,8 @@ public class RobotClient {
         if (robotClient.response != null) {
             existingRobots = robotClient.response.getEntity(Robots.class);
             //let's check if it's been removed correctly
-            robotClient.printAllRobots(existingRobots);
+            existingRobots.printAllRobots_Robots();
+            //robotClient.printAllRobots(existingRobots);
         }
     }
 
