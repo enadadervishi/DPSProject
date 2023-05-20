@@ -18,7 +18,7 @@ public class RobotClient {
 
     private final BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
 
-    private String serverAdr;
+    private static String serverAdr;
     private String id;
     private int port;
 
@@ -33,87 +33,85 @@ public class RobotClient {
         String postPath = "/cleaning_robots/add";
         String getPath = "/cleaning_robots/list";
 
+        //till the IP address entered by the user is invalid, ask for it again
         robotClient.response = getRequest(client, robotClient.enterAddress());
         while (robotClient.response == null){
             robotClient.response = getRequest(client,robotClient.enterAddress());
         }
 
-        Robot newR = robotClient.signIn(robotClient.serverAdr);
-        robotClient.response = getRequest(client, newR.getServerAddress() + getPath);
-        Robots otherRobots = robotClient.response.getEntity(Robots.class);
-        robotClient.postNewRobot(client, postPath, newR);
+        //when IP address is correct then ask for signing in
+        Robot newR = robotClient.signIn(serverAdr);
 
-        for(Robot allRobs: otherRobots.getRobotsList()){
-            while((allRobs.getId().equals(newR.getId()))||(allRobs.getPort()==newR.getPort())){
-                System.out.println("SOMETHING WENT WRONG");
-                if((allRobs.getId().equals(newR.getId()))){
+        //now we have to check if in the serverAdd where this new robot wants to
+        //be added there has already existed the same name
+        robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
+        Robots existingRobots = robotClient.response.getEntity(Robots.class);
+        robotClient.printAllRobots(existingRobots);
+
+        //ask to put a valid ID until it is put
+        boolean invalid_input = true;
+        while(invalid_input) {
+            for(Robot w : existingRobots.getRobotsList()) {
+                if(newR.getId().equals(w.getId())) {
                     System.out.println("    ID already used");
-                }else{
-                    System.out.println("    PORT already used");
+                    newR = robotClient.signIn(serverAdr);
                 }
-                newR = robotClient.signIn(robotClient.serverAdr);
-                /** QUI NON SERVE FARE DUE DIVERSE ROBOTCLIENT.RESPONSE QUI SOTTO: ....*/
-                robotClient.response = getRequest(client, newR.getServerAddress() + getPath);
-
-                otherRobots = robotClient.response.getEntity(Robots.class);
-                /** ... E QUI SOTTO: MERGEALI*/
-                robotClient.postNewRobot(client, postPath, newR);
             }
+            //post the new robot
+            invalid_input = false;
+            robotClient.postNewRobot(client,postPath,newR);
         }
 
+        //update the list of the existing robots
+        robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
+        existingRobots = robotClient.response.getEntity(Robots.class);
+
+        //welcoming message
         System.out.println(newR.getId() +" WELCOME TO GREENFIELD!");
-        if(otherRobots.getRobotsList().isEmpty())
+        if(existingRobots.getRobotsList().isEmpty())
             System.out.println("You're the first cleaning robot of Greenfield");
         else{
             System.out.println("Below a list of all cleaning robots in Greenfield");
-            robotClient.printAllRobots(otherRobots);
+            robotClient.printAllRobots(existingRobots);
         }
 
-        //SEARCH FOR N_DISTRICT
-        robotPublisher = new RobotPub(searchForDistrict(newR));
-        robotPublisher.publishing();
-
-
+        Thread.sleep(10000);
 
         if(newR.getId().equals("eni"))
             Thread.sleep(10000);
         else
             Thread.sleep(40000);
 
-
-
         System.out.println("Removing "+ newR.getId() + "...");
         robotClient.deleteActualRobot(client, newR.getServerAddress()+ "/cleaning_robots/remove", newR);
 
+        //update the list of the existing robots
+        robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
+        existingRobots = robotClient.response.getEntity(Robots.class);
+        //let's check if it's been removed correctly
+        robotClient.printAllRobots(existingRobots);
+
+
+
+
     }
 
-    public static int searchForDistrict(Robot r){
-
-        //Robots.getInstance().getRobotsList();
-        for(Robot l: Robots.getInstance().getRobotsList()){
-            if(l.getId().equals(r.getId()))
-                return l.getDistrict();
-        }
-
-        return 200;
-    }
-
-
-
-    public Robot signIn(String serverAdd) throws IOException {
-        System.out.println("Now enter an ID: ");
-        this.id = buff.readLine();
-        System.out.println("Last enter a valid PORT number: ");
-        this.port = Integer.parseInt(buff.readLine());
-        return new Robot(serverAdd, id, port);
-    }
 
     public String enterAddress() throws IOException {
         System.out.println("HI ROBOT!");
         System.out.println("To start enter a valid server address please: ");
-        this.serverAdr = buff.readLine();
-        return this.serverAdr;
+        serverAdr = buff.readLine();
+        return serverAdr;
     }
+
+    public Robot signIn(String serverAdd) throws IOException {
+        System.out.println("Enter a valid ID: ");
+        this.id = buff.readLine();
+        System.out.println("Enter the PORT number: ");
+        this.port = Integer.parseInt(buff.readLine());
+        return new Robot(serverAdd, id, port);
+    }
+
 
     public void postNewRobot(Client robotC, String postPath, Robot newR) {
         ClientResponse robotCResponse;
