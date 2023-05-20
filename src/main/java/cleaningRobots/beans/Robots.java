@@ -50,7 +50,7 @@ public class Robots {
     }
 
     public synchronized void postRobot(Robot r){
-        if(checkId(this.robotsList,r)&&(checkPort(this.robotsList,r))){
+        if(checkId(this.robotsList,r)){ /**&&(checkPort(this.robotList,r))*/
             System.out.println("[from postRobot] "+r.getId() +" has been added");
             this.robotsList.add(r);
 
@@ -68,7 +68,7 @@ public class Robots {
 
     }
 
-    public synchronized int[] assigningPosition(int district){
+    public int[] assigningPosition(int district){
         Random rand = new Random();
         int ver, hor;
 
@@ -94,7 +94,7 @@ public class Robots {
         return p;
     }
 
-    public synchronized int whereToGo(){
+    public int whereToGo(){
 
         int min = getCounterForDistrict()[0]; //controllo il numero di robot per ogni distretto
         for(int i=0; i<getCounterForDistrict().length; i++){
@@ -112,8 +112,16 @@ public class Robots {
                 val = i;
         }
 
-
         return val;
+    }
+
+    public synchronized Robot getRobotById(String name){
+
+        for(Robot r: this.robotsList){
+            if(r.getId().equals(name))
+                return r;
+        }
+        return null; //tecnicamente impossibile perche gli altri check li faccio prima
     }
 
     public synchronized void deleteRobot(Robot r){
@@ -147,6 +155,7 @@ public class Robots {
         return true;
     }
 
+    /** SEE ABOVE ITS USAGE SEARCH JAVADOC IN THIS CLASS
     public synchronized boolean checkPort(List<Robot> list, Robot newRobot){
         for(Robot rob: list){
             if (rob.getPort() == newRobot.getPort()){
@@ -157,6 +166,6 @@ public class Robots {
         System.out.println("    [from checkPort method] Correct port");
         return true;
     }
-
+     */
 
 }

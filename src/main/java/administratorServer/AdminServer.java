@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * Check for the robot if:
- * ID is unique && Port is available && IP address is available
+ * ID is unique && Port is available (always actually) && IP address is available
  */
 public class AdminServer {
 
@@ -31,12 +31,11 @@ public class AdminServer {
 
         serverSubscriber.subscription();
 
-        //System.out.println("Hit any key to stop...");
-        //System.in.read(); //remember to uncomment
-        //System.out.println("Stopping server"); // remember to uncomment
-
-        //server.stop(0);
-        //System.out.println("Administrator Server stopped");
+        // System.out.println("Hit any key to stop...");
+        // System.in.read(); //remember to uncomment
+        // System.out.println("Stopping server"); // remember to uncomment
+        // server.stop(0);
+        // System.out.println("Administrator Server stopped");
 
     }
 

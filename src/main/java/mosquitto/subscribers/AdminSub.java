@@ -34,9 +34,9 @@ public class AdminSub {
     public void subscription() throws MqttException {
 
         // Connect the client
-        System.out.println(server + " Connecting Broker " + broker);
+        System.out.println(server + " connecting to broker " + broker);
         client.connect(connOpts);
-        System.out.println(server + " Connected - Thread PID: " + Thread.currentThread().getId());
+        System.out.println(server + " connected - Thread PID: " + Thread.currentThread().getId());
 
         // Callback
         client.setCallback(new MqttCallback() {

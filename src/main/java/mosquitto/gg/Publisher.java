@@ -14,8 +14,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class Publisher {
 
 
-    private static final int nDistrict = 3; //from 0 to 3 => 4 districts
+    private static final int nDistrict=3; //from 0 to 3 => 4 districts
+
+    /**
     public static void main(String[] args) {
+
 
         MqttClient client;
         String broker = "tcp://localhost:1883";
@@ -55,4 +58,5 @@ public class Publisher {
 
     }
 
+    */
 }

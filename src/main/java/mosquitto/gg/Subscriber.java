@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Subscriber {
 
 
-
+    /**
     public static void main(String[] args) {
 
         MqttClient client;
@@ -88,6 +88,6 @@ public class Subscriber {
 
 
     }
-
+*/
 
 }

@@ -45,16 +45,22 @@ public class RobotClient {
         //now we have to check if in the serverAdd where this new robot wants to
         //be added there has already existed the same name
         robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
-        Robots existingRobots = robotClient.response.getEntity(Robots.class);
-        robotClient.printAllRobots(existingRobots);
+        Robots existingRobots = null;
+        if (robotClient.response != null) {
+            existingRobots = robotClient.response.getEntity(Robots.class);
+            robotClient.printAllRobots(existingRobots);
+        }
+
 
         //ask to put a valid ID until it is put
         boolean invalid_input = true;
         while(invalid_input) {
-            for(Robot w : existingRobots.getRobotsList()) {
-                if(newR.getId().equals(w.getId())) {
-                    System.out.println("    ID already used");
-                    newR = robotClient.signIn(serverAdr);
+            if (existingRobots != null) {
+                for(Robot w : existingRobots.getRobotsList()) {
+                    if(newR.getId().equals(w.getId())) {
+                        System.out.println("    ID already used");
+                        newR = robotClient.signIn(serverAdr);
+                    }
                 }
             }
             //post the new robot
@@ -64,18 +70,27 @@ public class RobotClient {
 
         //update the list of the existing robots
         robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
-        existingRobots = robotClient.response.getEntity(Robots.class);
+        if (robotClient.response != null) {
+            existingRobots = robotClient.response.getEntity(Robots.class);
+        }
 
         //welcoming message
         System.out.println(newR.getId() +" WELCOME TO GREENFIELD!");
-        if(existingRobots.getRobotsList().isEmpty())
-            System.out.println("You're the first cleaning robot of Greenfield");
-        else{
-            System.out.println("Below a list of all cleaning robots in Greenfield");
-            robotClient.printAllRobots(existingRobots);
+        if (existingRobots != null) {
+            if(existingRobots.getRobotsList().isEmpty())
+                System.out.println("You're the first cleaning robot of Greenfield");
+            else{
+                System.out.println("Below a list of all cleaning robots in Greenfield");
+                robotClient.printAllRobots(existingRobots);
+            }
         }
 
-        Thread.sleep(10000);
+        //let's initialize the mosquitto and connection to district topic
+        if (existingRobots != null) {
+            robotPublisher = new RobotPub(existingRobots.getRobotById(newR.getId()).getDistrict());
+            robotPublisher.publishing();
+        }
+
 
         if(newR.getId().equals("eni"))
             Thread.sleep(10000);
@@ -87,13 +102,11 @@ public class RobotClient {
 
         //update the list of the existing robots
         robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
-        existingRobots = robotClient.response.getEntity(Robots.class);
-        //let's check if it's been removed correctly
-        robotClient.printAllRobots(existingRobots);
-
-
-
-
+        if (robotClient.response != null) {
+            existingRobots = robotClient.response.getEntity(Robots.class);
+            //let's check if it's been removed correctly
+            robotClient.printAllRobots(existingRobots);
+        }
     }
 
 
@@ -117,7 +130,9 @@ public class RobotClient {
         ClientResponse robotCResponse;
         robotCResponse = postRequest(robotC, newR.getServerAddress() + postPath, newR);
         try {
-            System.out.println(robotCResponse.toString());
+            if (robotCResponse != null) {
+                System.out.println(robotCResponse); //just cause "robotCResponse.toString threw warning
+            }
         } catch (NullPointerException ex) {
             System.out.println("robotCResponse: " + robotCResponse);
         }
@@ -127,7 +142,9 @@ public class RobotClient {
         ClientResponse robotCResponse;
         robotCResponse = deleteRequest(robotC, deletePath, robot);
         try {
-            System.out.println(robotCResponse.toString());
+            if (robotCResponse != null) {
+                System.out.println(robotCResponse); //just cause "robotCResponse.toString threw warning
+             }
         } catch (NullPointerException ex) {
             System.out.println("robotCResponse: " + robotCResponse);
         }
