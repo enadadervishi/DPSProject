@@ -4,8 +4,8 @@ cleaningRobots/services/CleaningRobotsService.java
  cleaningRobots.services.CleaningRobotsService
 requestHandler/RequestHandler.java
  requestHandler.RequestHandler
-cleaningRobots/RobotClient.java
- cleaningRobots.RobotClient
+administratorServer/AdminServer.java
+ administratorServer.AdminServer
 exchangeOfInfo/BidirectionalService.java
  exchangeOfInfo.BidirectionalService
 mosquitto/AdminSub.java
@@ -34,5 +34,16 @@ mosquitto/RobotPub.java
  mosquitto.RobotPub
 cleaningRobots/beans/Robot.java
  cleaningRobots.beans.Robot
-administratorServer/AdminServer.java
- administratorServer.AdminServer
+mySimulator/simulator/PM10Simulator.java
+ mySimulator.simulator.PM10Simulator
+mySimulator/simulator/Simulator.java
+ mySimulator.simulator.Simulator
+mySimulator/simulator/Measurement.java
+ mySimulator.simulator.Measurement
+mySimulator/simulator/Buffer.java
+ mySimulator.simulator.Buffer
+mySimulator/MyBuffer.java
+ mySimulator.MyBuffer
+cleaningRobots/RobotClient.java
+ cleaningRobots.RobotClient
+ cleaningRobots.RobotClient$1

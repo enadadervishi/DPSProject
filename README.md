@@ -26,3 +26,16 @@ id
 district
 timestamp 
 level 
+
+
+Vedi prima lezione
+Il thread sta in wait fino a quando non ho il buffer pieno a 8. 
+quando è pieno a 8 allora notifyall col thread che quindi mi manda l'avergage di questi
+poi questo average verrà salvato da qualche parte e poi il buffer veràà svuotato di 4 misurazioni più vecchie
+e a questo punto di nuovo wait fino a quando non si riempie e cosi via dicendo
+
+Poi dal cleaning robot ogni 15 sec viene inviato al server un mex trhough mosquitto:
+questo contiene una lista di medie delle misurazioni
+
+
+Manca assolutamente capire come "fermarmi" a 8 misurazioni per fare le media
