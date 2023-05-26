@@ -5,12 +5,18 @@ import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import mosquitto.RobotPub;
+import mySimulator.MyBuffer;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import mySimulator.simulator.Buffer;
+import mySimulator.simulator.Measurement;
+import mySimulator.simulator.PM10Simulator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.google.api.Service.newBuilder;
 import static requestHandler.RequestHandler.*;
@@ -89,6 +95,44 @@ public class RobotClient {
             }
         }
 
+        Buffer buff = new Buffer() {
+
+            int bufferIndex = 0;
+            @Override
+            public void addMeasurement(Measurement m) {
+
+                ArrayList<Measurement> listOfMeasurements = new ArrayList<>();
+                listOfMeasurements.add(m);
+
+                System.out.println("MEASUREMENT: "+ m.getId() + m.getValue() + this.bufferIndex );
+                bufferIndex ++;
+
+            }
+
+            @Override
+            public List<Measurement> readAllAndClean() {
+                return null;
+            }
+        };
+
+        PM10Simulator pm10Simulator = new PM10Simulator(buff);
+
+        pm10Simulator.start(); // here the value is created and then already added
+        //pm10Simulator.stopMeGently();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /** HERE PROTO FILE */
 
@@ -125,6 +169,12 @@ public class RobotClient {
         //s.close();
 
         //System.out.println(try_APLevel);
+
+
+
+
+
+
 
 
         /** END PROTO FILE */
