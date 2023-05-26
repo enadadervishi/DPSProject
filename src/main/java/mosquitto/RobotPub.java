@@ -1,4 +1,4 @@
-package mosquitto.publishers;
+package mosquitto;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;

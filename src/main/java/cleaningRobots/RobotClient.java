@@ -4,7 +4,7 @@ import cleaningRobots.beans.Robot;
 import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import mosquitto.publishers.RobotPub;
+import mosquitto.RobotPub;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.BufferedReader;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import static com.google.api.Service.newBuilder;
 import static requestHandler.RequestHandler.*;
 
 public class RobotClient {
@@ -88,13 +89,58 @@ public class RobotClient {
             }
         }
 
+
+        /** HERE PROTO FILE */
+
+        /*
+        AirPollutionOuterClass.AirPollution try_level = AirPollutionOuterClass.AirPollution.newBuilder()
+                .setId("TRY NAME")
+                .setDistrict(3)
+                .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
+                        .setTime("2000 ioohenfv")
+                        .setLevel(100))
+                .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
+                        .setTime("h355grwf 435hgrw")
+                        .setLevel(200))
+                .build();
+        */
+
+        /*
+        AirPollutionOuterClass.AirPollution try_APLevel = newBuilder()
+                        .setId("TRY NAME")
+                        .setDistrict(existingRobots.getRobotById(newR.getId()).getDistrict())
+                        .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
+                                .setTime(new Timestamp(System.currentTimeMillis()).toString())
+                                .setLevel(100))
+                        .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
+                                .setTime(new Timestamp(System.currentTimeMillis()).toString())
+                                .setLevel(200))
+                        .build();
+       */
+
+
+
+        //try_APLevel.writeTo(s.getOutputStream());
+
+        //s.close();
+
+        //System.out.println(try_APLevel);
+
+
+        /** END PROTO FILE */
+
+
+
         //let's initialize the mosquitto and connection to district topic
-        if (existingRobots != null) {
-            robotPublisher = new RobotPub(existingRobots.getRobotById(newR.getId()).getDistrict());
-            robotPublisher.publishing();
+        while (true){
+            if (existingRobots != null) {
+                robotPublisher = new RobotPub(existingRobots.getRobotById(newR.getId()).getDistrict());
+                robotPublisher.publishing();
+            }
+            Thread.sleep(15000);
         }
 
-
+        /*
         if(newR.getId().equals("eni"))
             Thread.sleep(10000);
         else
@@ -111,6 +157,7 @@ public class RobotClient {
             existingRobots.printAllRobots_Robots();
             //robotClient.printAllRobots(existingRobots);
         }
+         */
     }
 
 

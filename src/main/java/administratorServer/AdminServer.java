@@ -2,9 +2,7 @@ package administratorServer;
 
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpsServer;
-import mosquitto.gg.Subscriber;
-import mosquitto.subscribers.AdminSub;
+import mosquitto.AdminSub;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
@@ -18,8 +16,8 @@ public class AdminServer {
     private static final String HOST = "localhost";
     private static final int PORT = 8888;
 
+    public static void main(String[] args) throws IOException, MqttException, InterruptedException {
 
-    public static void main(String[] args) throws IOException, MqttException {
 
         AdminSub serverSubscriber = new AdminSub();
 

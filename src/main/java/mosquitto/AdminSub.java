@@ -1,9 +1,10 @@
-package mosquitto.subscribers;
+package mosquitto;
 
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.sql.Timestamp;
 import java.util.Scanner;
+import java.util.TimerTask;
 
 /**
  * Admin is subscribed to cleaning robots publishing
@@ -31,7 +32,7 @@ public class AdminSub {
         connOpts.setCleanSession(true);
     }
 
-    public void subscription() throws MqttException {
+    public void subscription() throws MqttException{
 
         // Connect the client
         System.out.println(server + " connecting to broker " + broker);

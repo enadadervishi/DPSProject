@@ -18,3 +18,11 @@ robots dove c'è listaaa yuhuuu daje che ce la puoi fare
 
 quando si aggiungono robot handled la posizione un po a caso 
 pos 3, 2, 1, 0,... e cosi via metodo ad cazzum
+
+File protos are used to send infos to clients 
+
+Save air pollution levels on an object "airPoll Levels" to save the infos about each district air poll:
+id
+district
+timestamp 
+level 
