@@ -1,9 +1,14 @@
 # Project questions
 
+## brew services start mosquitto
+## brew services stop mosquitto
+
+
 LAVORO:
 TUTTO REST 
 CLIENT ROBOT: ADD-REMOVE
 CLIENT ADMIN: GET 
+
 
 
 gprc: solo client robot

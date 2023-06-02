@@ -29,7 +29,6 @@ public class AdminServer {
 
         serverSubscriber.subscription();
 
-        // System.out.println("Hit any key to stop...");
         // System.in.read(); //remember to uncomment
         // System.out.println("Stopping server"); // remember to uncomment
         // server.stop(0);

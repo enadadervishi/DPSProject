@@ -71,7 +71,7 @@ public final class AirPollutionOuterClass {
   /**
    * Protobuf type {@code AirPollution}
    */
-  public  static final class AirPollution extends
+  public static final class AirPollution extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:AirPollution)
       AirPollutionOrBuilder {
@@ -206,7 +206,7 @@ public final class AirPollutionOuterClass {
     /**
      * Protobuf type {@code AirPollution.APLevel}
      */
-    public  static final class APLevel extends
+    public static final class APLevel extends
         com.google.protobuf.GeneratedMessageV3 implements
         // @@protoc_insertion_point(message_implements:AirPollution.APLevel)
         APLevelOrBuilder {
@@ -300,6 +300,7 @@ public final class AirPollutionOuterClass {
        * <code>required string time = 1;</code>
        * @return Whether the time field is set.
        */
+      @java.lang.Override
       public boolean hasTime() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -307,6 +308,7 @@ public final class AirPollutionOuterClass {
        * <code>required string time = 1;</code>
        * @return The time.
        */
+      @java.lang.Override
       public java.lang.String getTime() {
         java.lang.Object ref = time_;
         if (ref instanceof java.lang.String) {
@@ -325,6 +327,7 @@ public final class AirPollutionOuterClass {
        * <code>required string time = 1;</code>
        * @return The bytes for time.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString
           getTimeBytes() {
         java.lang.Object ref = time_;
@@ -345,6 +348,7 @@ public final class AirPollutionOuterClass {
        * <code>required int32 level = 2;</code>
        * @return Whether the level field is set.
        */
+      @java.lang.Override
       public boolean hasLevel() {
         return ((bitField0_ & 0x00000002) != 0);
       }
@@ -352,6 +356,7 @@ public final class AirPollutionOuterClass {
        * <code>required int32 level = 2;</code>
        * @return The level.
        */
+      @java.lang.Override
       public int getLevel() {
         return level_;
       }
@@ -799,6 +804,7 @@ public final class AirPollutionOuterClass {
          * <code>required int32 level = 2;</code>
          * @return Whether the level field is set.
          */
+        @java.lang.Override
         public boolean hasLevel() {
           return ((bitField0_ & 0x00000002) != 0);
         }
@@ -806,6 +812,7 @@ public final class AirPollutionOuterClass {
          * <code>required int32 level = 2;</code>
          * @return The level.
          */
+        @java.lang.Override
         public int getLevel() {
           return level_;
         }
@@ -890,6 +897,7 @@ public final class AirPollutionOuterClass {
      * <code>required string id = 1;</code>
      * @return Whether the id field is set.
      */
+    @java.lang.Override
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -897,6 +905,7 @@ public final class AirPollutionOuterClass {
      * <code>required string id = 1;</code>
      * @return The id.
      */
+    @java.lang.Override
     public java.lang.String getId() {
       java.lang.Object ref = id_;
       if (ref instanceof java.lang.String) {
@@ -915,6 +924,7 @@ public final class AirPollutionOuterClass {
      * <code>required string id = 1;</code>
      * @return The bytes for id.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getIdBytes() {
       java.lang.Object ref = id_;
@@ -935,6 +945,7 @@ public final class AirPollutionOuterClass {
      * <code>required int32 district = 2;</code>
      * @return Whether the district field is set.
      */
+    @java.lang.Override
     public boolean hasDistrict() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -942,6 +953,7 @@ public final class AirPollutionOuterClass {
      * <code>required int32 district = 2;</code>
      * @return The district.
      */
+    @java.lang.Override
     public int getDistrict() {
       return district_;
     }
@@ -951,12 +963,14 @@ public final class AirPollutionOuterClass {
     /**
      * <code>repeated .AirPollution.APLevel aPLevel = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<AirPollutionOuterClass.AirPollution.APLevel> getAPLevelList() {
       return aPLevel_;
     }
     /**
      * <code>repeated .AirPollution.APLevel aPLevel = 4;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends AirPollutionOuterClass.AirPollution.APLevelOrBuilder> 
         getAPLevelOrBuilderList() {
       return aPLevel_;
@@ -964,18 +978,21 @@ public final class AirPollutionOuterClass {
     /**
      * <code>repeated .AirPollution.APLevel aPLevel = 4;</code>
      */
+    @java.lang.Override
     public int getAPLevelCount() {
       return aPLevel_.size();
     }
     /**
      * <code>repeated .AirPollution.APLevel aPLevel = 4;</code>
      */
+    @java.lang.Override
     public AirPollutionOuterClass.AirPollution.APLevel getAPLevel(int index) {
       return aPLevel_.get(index);
     }
     /**
      * <code>repeated .AirPollution.APLevel aPLevel = 4;</code>
      */
+    @java.lang.Override
     public AirPollutionOuterClass.AirPollution.APLevelOrBuilder getAPLevelOrBuilder(
         int index) {
       return aPLevel_.get(index);
@@ -1490,6 +1507,7 @@ public final class AirPollutionOuterClass {
        * <code>required int32 district = 2;</code>
        * @return Whether the district field is set.
        */
+      @java.lang.Override
       public boolean hasDistrict() {
         return ((bitField0_ & 0x00000002) != 0);
       }
@@ -1497,6 +1515,7 @@ public final class AirPollutionOuterClass {
        * <code>required int32 district = 2;</code>
        * @return The district.
        */
+      @java.lang.Override
       public int getDistrict() {
         return district_;
       }

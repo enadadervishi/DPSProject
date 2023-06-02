@@ -4,8 +4,9 @@ cleaningRobots/services/CleaningRobotsService.java
  cleaningRobots.services.CleaningRobotsService
 requestHandler/RequestHandler.java
  requestHandler.RequestHandler
-administratorServer/AdminServer.java
- administratorServer.AdminServer
+cleaningRobots/RobotClient.java
+ cleaningRobots.RobotClient
+ cleaningRobots.RobotClient$1
 exchangeOfInfo/BidirectionalService.java
  exchangeOfInfo.BidirectionalService
 mosquitto/AdminSub.java
@@ -13,8 +14,14 @@ mosquitto/AdminSub.java
  mosquitto.AdminSub$1
 cleaningRobots/beans/Robots.java
  cleaningRobots.beans.Robots
+mySimulator/simulator/Buffer.java
+ mySimulator.simulator.Buffer
+mySimulator/simulator/Simulator.java
+ mySimulator.simulator.Simulator
 mosquitto/gg/Publisher.java
  mosquitto.gg.Publisher
+mySimulator/simulator/Measurement.java
+ mySimulator.simulator.Measurement
 AirPollutionOuterClass.java
  AirPollutionOuterClass
  AirPollutionOuterClass$1
@@ -28,22 +35,15 @@ AirPollutionOuterClass.java
  AirPollutionOuterClass$AirPollutionOrBuilder
 Main.java
  Main
+mySimulator/simulator/PM10Simulator.java
+ mySimulator.simulator.PM10Simulator
 administratorClient/AdminClient.java
  administratorClient.AdminClient
+mySimulator/MyBuffer.java
+ mySimulator.MyBuffer
 mosquitto/RobotPub.java
  mosquitto.RobotPub
 cleaningRobots/beans/Robot.java
  cleaningRobots.beans.Robot
-mySimulator/simulator/PM10Simulator.java
- mySimulator.simulator.PM10Simulator
-mySimulator/simulator/Simulator.java
- mySimulator.simulator.Simulator
-mySimulator/simulator/Measurement.java
- mySimulator.simulator.Measurement
-mySimulator/simulator/Buffer.java
- mySimulator.simulator.Buffer
-mySimulator/MyBuffer.java
- mySimulator.MyBuffer
-cleaningRobots/RobotClient.java
- cleaningRobots.RobotClient
- cleaningRobots.RobotClient$1
+administratorServer/AdminServer.java
+ administratorServer.AdminServer
