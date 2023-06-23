@@ -3,32 +3,32 @@ package fullSimulator;
 import fullSimulator.simulator.Buffer;
 import fullSimulator.simulator.Measurement;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MyBuffer implements Buffer {
 
     private ArrayList<Measurement> arrayList;
     private double avg;
 
+    AveragesIn15Secs averages;
+
+
     public MyBuffer(ArrayList<Measurement> measurements, double res) {
         this.arrayList = measurements;
         this.avg = res;
+        this.averages = new AveragesIn15Secs();
     }
-
 
     @Override
     public void addMeasurement(Measurement m) {
 
         if(arrayList.size()<8) {
-            System.out.println("HERE TO ADD THE MEASUREMENT TO THE BUFFER");
-
+            //System.out.println("HERE TO ADD THE MEASUREMENT TO THE BUFFER");
             arrayList.add(m);
-            System.out.println("Measurement: " + m.getId() + " " + m.getValue() + " => " + arrayList.indexOf(m));
-
+            //System.out.println("Measurement: " + m.getId() + " " + m.getValue() + " => " + arrayList.indexOf(m));
         }else readAllAndClean();
-
 
         /**
          for(int i=0; i<8; i++)
@@ -37,15 +37,12 @@ public class MyBuffer implements Buffer {
          System.out.println("Measurement: "+ n.getId() + " "+ n.getValue());
          */
 
-
         /**
          //while(measurementArrayList.size()<8) {
          measurementArrayList.add(m);
          System.out.println("MEASUREMENT: " + m.getId() + m.getValue());
          //}
          */
-
-
 
     }
 
@@ -54,7 +51,7 @@ public class MyBuffer implements Buffer {
 
         ArrayList<Measurement> newArrayList = new ArrayList<>();
         for(Measurement m : arrayList){
-            System.out.println("Sum for avg: "+ m.getValue());
+            //System.out.println("Sum for avg: "+ m.getValue());
             avg = avg + m.getValue();
 
             /**if(arrayList.indexOf(m)>4)
@@ -67,12 +64,15 @@ public class MyBuffer implements Buffer {
 
             if(arrayList.indexOf(m)>3){
                 newArrayList.add(m);
-                System.out.println("ADDED TO A NEW ARRAY: "+  m.getId() + " " +  m.getValue() + " => " + newArrayList.indexOf(m));
+                //System.out.println("ADDED TO A NEW ARRAY: "+  m.getId() + " " +  m.getValue() + " => " + newArrayList.indexOf(m));
             }
         }
         avg = avg/8;
         System.out.println("Printing average: " + avg);
 
+        //averages.getAveragesIn15Secs().add(avg);
+        averages.getHashMapAverageTRY().put(avg, new Timestamp(System.currentTimeMillis()).toString());
+        System.out.println("        I TRIEDDDDD: "+ averages.getHashMapAverageTRY().get(avg));
                 /*
                 double sum=0;
                 for(Measurement m: measurementArrayList){
@@ -84,9 +84,7 @@ public class MyBuffer implements Buffer {
 
                 */
         //return measurementArrayList;
-
         arrayList = newArrayList;
         return arrayList;
     }
-
 }

@@ -1,9 +1,15 @@
 package mosquitto;
 
+import fullSimulator.MyBuffer;
+import fullSimulator.simulator.Buffer;
+import fullSimulator.simulator.Measurement;
+import fullSimulator.simulator.PM10Simulator;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.util.ArrayList;
 
 /**
  * robots publish air pollution levels
@@ -18,6 +24,9 @@ public class RobotPub {
 
     MqttConnectOptions connOpts;
 
+
+    private static ArrayList<Measurement> realTrying_measurementArrayList = new ArrayList<>();
+    private static double realTrying_averageOfAirPollution = 0;
 
     public RobotPub(int nDistrict) throws MqttException {
 
@@ -39,12 +48,15 @@ public class RobotPub {
         client.connect(connOpts);
         System.out.println(robotId + " Connected");
 
-        String payload = String.valueOf(0 + (Math.random() * 10)); // create a random number between 0 and 10
-        MqttMessage message = new MqttMessage(payload.getBytes());
+        //String payload = String.valueOf(0 + (Math.random() * 10)); // create a random number between 0 and 10
+
+        String realTrying_AirPollutionLevel = ("    !!!You need here the list of the averages!!!");
+
+        MqttMessage message = new MqttMessage( );
 
         // Set the QoS on the Message
         message.setQos(qos);
-        System.out.println(robotId + " Publishing message: " + payload + " ...");
+        System.out.println(robotId + " Publishing THE LIST OF AVERAGES: " + realTrying_AirPollutionLevel + " ...");
         client.publish(topic, message);
         System.out.println(robotId + " Message published");
 

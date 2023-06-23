@@ -139,7 +139,7 @@ public class Robots {
         List<Robot> robotsCopy = getRobotsList();
         for(Robot w: robotsCopy)
             if(w.getId().equalsIgnoreCase(r))
-                return w.getTestToGetAirPollution();
+                return String.valueOf(w.getAvgPM10());
         return null;
     }
 

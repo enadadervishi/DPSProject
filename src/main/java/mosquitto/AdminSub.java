@@ -4,7 +4,6 @@ import org.eclipse.paho.client.mqttv3.*;
 
 import java.sql.Timestamp;
 import java.util.Scanner;
-import java.util.TimerTask;
 
 /**
  * Admin is subscribed to cleaning robots publishing
@@ -49,7 +48,7 @@ public class AdminSub {
                 System.out.println(server +" Received a Message! - Callback - Thread PID: " + Thread.currentThread().getId() +
                         "\n\tTime:    " + time +
                         "\n\tTopic:   " + topicWithDistrict +
-                        "\n\tMessage: " + receivedMessage +
+                        "\n\tAVERAGES OF THE AIR POLLUTION LEVELS: " + receivedMessage +
                         "\n\tQoS:     " + message.getQos() + "\n");
 
                 //System.out.println("\n ***  Press a random key to exit *** \n");

@@ -19,12 +19,7 @@ public class Robot {
 
     private int[] coordinates;
     private int district;
-
-    public String getTestToGetAirPollution() {
-        // and more vars like: maintenance (boolean), position (coordinates <X> & <Y>), air pollution...
-        String testToGetAirPollution = "COOL";
-        return testToGetAirPollution+" TRY";
-    }
+    private double avgPM10;
 
     public Robot() {}
 
@@ -71,5 +66,9 @@ public class Robot {
     public void setDistrict(int district) {
         this.district = district;
     }
+
+    public double getAvgPM10() { return avgPM10;}
+
+    public void setAvgPM10(double avgPM10) { this.avgPM10 = avgPM10; }
 
 }

@@ -13,7 +13,6 @@ public class AirPollutionLevels {
     public AirPollutionLevels(ArrayList<Measurement> m, double a) {
         this.try_measurementArrayList = m;
         this.try_averageOfAirPollution = a;
-
     }
 
     public synchronized double averageTot(){
@@ -24,7 +23,19 @@ public class AirPollutionLevels {
        return try_averageOfAirPollution;
     }
 
+    public ArrayList<Measurement> getTry_measurementArrayList() {
+        return try_measurementArrayList;
+    }
 
+    public void setTry_measurementArrayList(ArrayList<Measurement> try_measurementArrayList) {
+        this.try_measurementArrayList = try_measurementArrayList;
+    }
 
+    public double getTry_averageOfAirPollution() {
+        return try_averageOfAirPollution;
+    }
 
+    public void setTry_averageOfAirPollution(double try_averageOfAirPollution) {
+        this.try_averageOfAirPollution = try_averageOfAirPollution;
+    }
 }
