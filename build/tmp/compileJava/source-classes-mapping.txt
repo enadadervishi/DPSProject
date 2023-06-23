@@ -2,10 +2,12 @@ mosquitto/gg/Subscriber.java
  mosquitto.gg.Subscriber
 cleaningRobots/services/CleaningRobotsService.java
  cleaningRobots.services.CleaningRobotsService
+fullSimulator/simulator/Measurement.java
+ fullSimulator.simulator.Measurement
 requestHandler/RequestHandler.java
  requestHandler.RequestHandler
-administratorServer/AdminServer.java
- administratorServer.AdminServer
+cleaningRobots/beans/Robot.java
+ cleaningRobots.beans.Robot
 exchangeOfInfo/BidirectionalService.java
  exchangeOfInfo.BidirectionalService
 mosquitto/AdminSub.java
@@ -15,35 +17,30 @@ cleaningRobots/beans/Robots.java
  cleaningRobots.beans.Robots
 mosquitto/gg/Publisher.java
  mosquitto.gg.Publisher
-AirPollutionOuterClass.java
- AirPollutionOuterClass
- AirPollutionOuterClass$1
- AirPollutionOuterClass$AirPollution
- AirPollutionOuterClass$AirPollution$1
- AirPollutionOuterClass$AirPollution$APLevel
- AirPollutionOuterClass$AirPollution$APLevel$1
- AirPollutionOuterClass$AirPollution$APLevel$Builder
- AirPollutionOuterClass$AirPollution$APLevelOrBuilder
- AirPollutionOuterClass$AirPollution$Builder
- AirPollutionOuterClass$AirPollutionOrBuilder
+fullSimulator/simulator/Buffer.java
+ fullSimulator.simulator.Buffer
+administratorServer/AdminServer.java
+ administratorServer.AdminServer
+proto/InfosOuterClass.java
+ proto.InfosOuterClass
+ proto.InfosOuterClass$1
+ proto.InfosOuterClass$Infos
+ proto.InfosOuterClass$Infos$1
+ proto.InfosOuterClass$Infos$Builder
+ proto.InfosOuterClass$InfosOrBuilder
+fullSimulator/simulator/Simulator.java
+ fullSimulator.simulator.Simulator
 Main.java
  Main
+fullSimulator/simulator/PM10Simulator.java
+ fullSimulator.simulator.PM10Simulator
 administratorClient/AdminClient.java
  administratorClient.AdminClient
 mosquitto/RobotPub.java
  mosquitto.RobotPub
-cleaningRobots/beans/Robot.java
- cleaningRobots.beans.Robot
-mySimulator/simulator/PM10Simulator.java
- mySimulator.simulator.PM10Simulator
-mySimulator/simulator/Simulator.java
- mySimulator.simulator.Simulator
-mySimulator/simulator/Measurement.java
- mySimulator.simulator.Measurement
-mySimulator/simulator/Buffer.java
- mySimulator.simulator.Buffer
-mySimulator/MyBuffer.java
- mySimulator.MyBuffer
+fullSimulator/MyBuffer.java
+ fullSimulator.MyBuffer
 cleaningRobots/RobotClient.java
  cleaningRobots.RobotClient
- cleaningRobots.RobotClient$1
+fullSimulator/AirPollutionLevels.java
+ fullSimulator.AirPollutionLevels

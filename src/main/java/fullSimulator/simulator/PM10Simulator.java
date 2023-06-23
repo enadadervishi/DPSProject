@@ -1,4 +1,4 @@
-package mySimulator.simulator;
+package fullSimulator.simulator;
 
 public class PM10Simulator extends Simulator {
 

@@ -1,4 +1,4 @@
-package mySimulator.simulator;
+package fullSimulator.simulator;
 
 public class Measurement implements Comparable<Measurement> {
 

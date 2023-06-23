@@ -4,21 +4,20 @@ import cleaningRobots.beans.Robot;
 import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import fullSimulator.MyBuffer;
+import fullSimulator.simulator.Buffer;
+import fullSimulator.simulator.Measurement;
+import fullSimulator.simulator.PM10Simulator;
 import mosquitto.RobotPub;
-import mySimulator.MyBuffer;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import mySimulator.simulator.Buffer;
-import mySimulator.simulator.Measurement;
-import mySimulator.simulator.PM10Simulator;
+import proto.InfosOuterClass;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import static com.google.api.Service.newBuilder;
 import static requestHandler.RequestHandler.*;
 
 public class RobotClient {
@@ -32,6 +31,8 @@ public class RobotClient {
     private ClientResponse response;
 
     private static RobotPub robotPublisher;
+    private static ArrayList<Measurement> measurementArrayList = new ArrayList<>();
+    private static double averageOfAirPollution = 0;
 
     public static void main(String[] args) throws IOException, InterruptedException, MqttException {
 
@@ -59,7 +60,6 @@ public class RobotClient {
             existingRobots.printAllRobots_Robots();
 
         }
-
 
         //ask to put a valid ID until it is put
         boolean invalid_input = true;
@@ -95,90 +95,25 @@ public class RobotClient {
             }
         }
 
-        Buffer buff = new Buffer() {
-
-            int bufferIndex = 0;
-            @Override
-            public void addMeasurement(Measurement m) {
-
-                ArrayList<Measurement> listOfMeasurements = new ArrayList<>();
-                listOfMeasurements.add(m);
-
-                System.out.println("MEASUREMENT: "+ m.getId() + m.getValue() + this.bufferIndex );
-                bufferIndex ++;
-
-            }
-
-            @Override
-            public List<Measurement> readAllAndClean() {
-                return null;
-            }
-        };
-
-        PM10Simulator pm10Simulator = new PM10Simulator(buff);
-
-        pm10Simulator.start(); // here the value is created and then already added
-        //pm10Simulator.stopMeGently();
+        Buffer buff = new MyBuffer(measurementArrayList, averageOfAirPollution);
+        PM10Simulator simulator = new PM10Simulator(buff);
+        simulator.start(); //IN HERE THE THREAD RUNS AND ADDS VALUES TO THE BUFFER
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        //AirPollutionLevels trial = new AirPollutionLevels(measurementArrayList, averageOfAirPollution);
 
         /** HERE PROTO FILE */
 
-        /*
-        AirPollutionOuterClass.AirPollution try_level = AirPollutionOuterClass.AirPollution.newBuilder()
-                .setId("TRY NAME")
+
+        InfosOuterClass.Infos try_infos = InfosOuterClass.Infos.newBuilder()
+                .setId("Trying")
                 .setDistrict(3)
-                .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
-                        .setTime("2000 ioohenfv")
-                        .setLevel(100))
-                .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
-                        .setTime("h355grwf 435hgrw")
-                        .setLevel(200))
                 .build();
-        */
 
-        /*
-        AirPollutionOuterClass.AirPollution try_APLevel = newBuilder()
-                        .setId("TRY NAME")
-                        .setDistrict(existingRobots.getRobotById(newR.getId()).getDistrict())
-                        .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
-                                .setTime(new Timestamp(System.currentTimeMillis()).toString())
-                                .setLevel(100))
-                        .addAPLevel(AirPollutionOuterClass.AirPollution.APLevel.newBuilder()
-                                .setTime(new Timestamp(System.currentTimeMillis()).toString())
-                                .setLevel(200))
-                        .build();
-       */
+        System.out.println("                HERE PROTO FILE!!!! : "+ try_infos);
 
 
-
-        //try_APLevel.writeTo(s.getOutputStream());
-
-        //s.close();
-
-        //System.out.println(try_APLevel);
-
-
-
-
-
-
-
-
-        /** END PROTO FILE */
-
+        /** HERE COMMENTED ONLY CAUSE USED WHILE TRUE */
 
 
         //let's initialize the mosquitto and connection to district topic
@@ -189,6 +124,7 @@ public class RobotClient {
             }
             Thread.sleep(15000);
         }
+
 
         /*
         if(newR.getId().equals("eni"))
@@ -209,7 +145,6 @@ public class RobotClient {
         }
          */
     }
-
 
     public String enterAddress() throws IOException {
         System.out.println("HI ROBOT!");
