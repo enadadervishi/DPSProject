@@ -1,6 +1,7 @@
 package cleaningRobots.beans;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 
 /**
  * A cleaning robot is initialized by specifying:
@@ -16,10 +17,10 @@ public class Robot {
     private String serverAddress;
     private String id;
     private int port;
-
     private int[] coordinates;
     private int district;
-    private double avgPM10;
+
+    private ArrayList<Double> avgPM10 = new ArrayList<>();
 
     public Robot() {}
 
@@ -67,8 +68,12 @@ public class Robot {
         this.district = district;
     }
 
-    public double getAvgPM10() { return avgPM10;}
+    public ArrayList<Double> getAvgPM10() {
+        return avgPM10;
+    }
 
-    public void setAvgPM10(double avgPM10) { this.avgPM10 = avgPM10; }
+    public void setAvgPM10(ArrayList<Double> avgPM10) {
+        this.avgPM10 = avgPM10;
+    }
 
 }

@@ -4,7 +4,6 @@ import cleaningRobots.beans.Robot;
 import cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import fullSimulator.AveragesIn15Secs;
 import fullSimulator.MyBuffer;
 import fullSimulator.simulator.Buffer;
 import fullSimulator.simulator.Measurement;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static requestHandler.RequestHandler.*;
 
@@ -26,7 +24,8 @@ public class RobotClient {
 
     private final BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
     private static String serverAdr;
-    private String id;
+
+    private static String id;
     private int port;
 
     private ClientResponse response;
@@ -34,7 +33,23 @@ public class RobotClient {
     private static RobotPub robotPublisher;
     private static ArrayList<Measurement> measurementArrayList = new ArrayList<>();
     private static double averageOfAirPollution = 0;
+    private static Robots existingRobots = null;
 
+    private static Robot[] newR= null;
+
+    private static ArrayList<Double> avgToSendThroughMQTT = new ArrayList<>();
+
+    public static ArrayList<Double> getAvgToSendThroughMQTT() {
+        return avgToSendThroughMQTT;
+    }
+
+    public RobotClient() {}
+    public static Robots getExistingRobots() {
+        return existingRobots;
+    }
+    public static Robot[] getNewR() {
+        return newR;
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException, MqttException {
 
@@ -50,12 +65,12 @@ public class RobotClient {
         }
 
         //when IP address is correct then ask for signing in
-        final Robot[] newR = {robotClient.signIn(serverAdr)};
+        newR = new Robot[]{robotClient.signIn(serverAdr)};
 
         //now we have to check if in the serverAdd where this new robot wants to
         //be added there has already existed the same name
         robotClient.response = getRequest(client, newR[0].getServerAddress()+getPath);
-        Robots existingRobots = null;
+        //Robots existingRobots = null;
         if (robotClient.response != null) {
             existingRobots = robotClient.response.getEntity(Robots.class);
             //robotClient.printAllRobots(existingRobots);
@@ -98,8 +113,7 @@ public class RobotClient {
 
         /** HERE AP LEVELS */
 
-        Robot finalNewR = newR[0];
-        Robots finalExistingRobots = existingRobots;
+    /**
         Buffer trying_buff = new Buffer() {
             @Override
             public void addMeasurement(Measurement m) {
@@ -116,15 +130,6 @@ public class RobotClient {
                 for(Measurement m : measurementArrayList){
                     //System.out.println("Sum for avg: "+ m.getValue());
                     averageOfAirPollution = averageOfAirPollution + m.getValue();
-
-                    /**if(arrayList.indexOf(m)>4)
-                     //arrayList.remove(m);
-                     System.out.println("HAS TO BE REMOVED");
-                     */
-                    //THERE IS A PROBLEM HERE CAUSE ConcurrentModificationException WAS THROWN
-                    // WHICH MEANS THAT YOU CANNOT REMOVE AN ELEMENT CAUSE IT'S STILL IN USAGE
-                    // THE SOLUTION IS TO CREATE ANOTHER ONE
-
                     if(measurementArrayList.indexOf(m)>3){
                         newArrayList.add(m);
                         //System.out.println("ADDED TO A NEW ARRAY: "+  m.getId() + " " +  m.getValue() + " => " + newArrayList.indexOf(m));
@@ -132,55 +137,17 @@ public class RobotClient {
                 }
                 averageOfAirPollution = averageOfAirPollution/8;
                 System.out.println("Printing average: " + averageOfAirPollution);
-
-                for(Robot w : finalExistingRobots.getRobotsList()) {
-                    if(finalNewR.getId().equals(w.getId())) {
-                        finalNewR.setAvgPM10(averageOfAirPollution);
-                        System.out.println("     TRYYYYY PRINT AVERAGE: " + finalNewR.getAvgPM10());
-                    }
-                }
-
-
-
-                /*
-                double sum=0;
-                for(Measurement m: measurementArrayList){
-                    sum = m.getValue();
-                    if(measurementArrayList.indexOf(m)<4)
-                        measurementArrayList.remove(m);
-                }
-                average[0] = sum/measurementArrayList.size();
-
-                */
-                //return measurementArrayList;
+                existingRobots.getRobotById(newR[0].getId()).getAvgPM10().add(averageOfAirPollution);
+                System.out.println("     List of averages: " + existingRobots.getRobotById(newR[0].getId()).getAvgPM10());
                 measurementArrayList = newArrayList;
                 return measurementArrayList;
             }
         };
+    */
 
-
-
-        //Buffer buff = new MyBuffer(measurementArrayList, averageOfAirPollution);
-        //PM10Simulator simulator = new PM10Simulator(buff);
-        //simulator.start(); //IN HERE THE THREAD RUNS AND ADDS VALUES TO THE BUFFER
-        PM10Simulator trying_simulator = new PM10Simulator(trying_buff);
-        trying_simulator.start(); //IN HERE THE THREAD RUNS AND ADDS VALUES TO THE BUFFER
-
-
-        /**
-        robotClient.response = getRequest(client, newR.getServerAddress()+"cleaning_robots/get/{robot}/air_pollution_level");
-        if (robotClient.response != null) {
-            for(Robot w : existingRobots.getRobotsList()) {
-                if(newR.getId().equals(w.getId())) {
-                    w.setAvgPM10(robotClient.response.getEntity(Robots.class));
-                }
-            }
-        }
-         */
-
-
-
-        //AirPollutionLevels trial = new AirPollutionLevels(measurementArrayList, averageOfAirPollution);
+        Buffer buff = new MyBuffer(measurementArrayList, averageOfAirPollution);
+        PM10Simulator simulator = new PM10Simulator(buff);
+        simulator.start(); //IN HERE THE THREAD RUNS AND ADDS VALUES TO THE BUFFER
 
         /** HERE PROTO FILE */
 
@@ -193,11 +160,13 @@ public class RobotClient {
 
 
         /** HERE MOSQUITTO */
-        //let's initialize the mosquitto and connection to district topic
         while (true){
             if (existingRobots != null) {
                 robotPublisher = new RobotPub(existingRobots.getRobotById(newR[0].getId()).getDistrict());
                 robotPublisher.publishing();
+
+                avgToSendThroughMQTT = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+                avgToSendThroughMQTT.clear();
             }
             Thread.sleep(15000);
         }

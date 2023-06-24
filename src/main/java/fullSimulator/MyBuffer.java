@@ -3,22 +3,22 @@ package fullSimulator;
 import fullSimulator.simulator.Buffer;
 import fullSimulator.simulator.Measurement;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import static cleaningRobots.RobotClient.*;
 
 public class MyBuffer implements Buffer {
 
     private ArrayList<Measurement> arrayList;
     private double avg;
 
-    AveragesIn15Secs averages;
-
+    private ArrayList<Double> averageListToSend;
 
     public MyBuffer(ArrayList<Measurement> measurements, double res) {
         this.arrayList = measurements;
         this.avg = res;
-        this.averages = new AveragesIn15Secs();
+        this.averageListToSend = new ArrayList<>();
     }
 
     @Override
@@ -29,20 +29,6 @@ public class MyBuffer implements Buffer {
             arrayList.add(m);
             //System.out.println("Measurement: " + m.getId() + " " + m.getValue() + " => " + arrayList.indexOf(m));
         }else readAllAndClean();
-
-        /**
-         for(int i=0; i<8; i++)
-         measurementArrayList.add(m);
-         for(Measurement n: measurementArrayList)
-         System.out.println("Measurement: "+ n.getId() + " "+ n.getValue());
-         */
-
-        /**
-         //while(measurementArrayList.size()<8) {
-         measurementArrayList.add(m);
-         System.out.println("MEASUREMENT: " + m.getId() + m.getValue());
-         //}
-         */
 
     }
 
@@ -68,23 +54,14 @@ public class MyBuffer implements Buffer {
             }
         }
         avg = avg/8;
-        System.out.println("Printing average: " + avg);
+        //System.out.println("Printing average: " + avg);
 
-        //averages.getAveragesIn15Secs().add(avg);
-        averages.getHashMapAverageTRY().put(avg, new Timestamp(System.currentTimeMillis()).toString());
-        System.out.println("        I TRIEDDDDD: "+ averages.getHashMapAverageTRY().get(avg));
-                /*
-                double sum=0;
-                for(Measurement m: measurementArrayList){
-                    sum = m.getValue();
-                    if(measurementArrayList.indexOf(m)<4)
-                        measurementArrayList.remove(m);
-                }
-                average[0] = sum/measurementArrayList.size();
+        getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10().add(avg);
+        averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+        //System.out.println("     List of averages: " + averageListToSend);
 
-                */
-        //return measurementArrayList;
         arrayList = newArrayList;
         return arrayList;
     }
+
 }

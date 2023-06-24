@@ -18,7 +18,6 @@ public class Robots {
     @XmlElement(name="connected_cleaning_robots")
     private List<Robot> robotsList;
 
-
     public int[] getCounterForDistrict() {
         return counterForDistrict;
     }
@@ -60,7 +59,6 @@ public class Robots {
 
             System.out.println("POSITION: "+ Arrays.toString(r.getCoordinates()));
             System.out.println("DISTRICT: "+ r.getDistrict());
-
 
         }else {
             System.out.println("[from postRobot] NOT added");

@@ -1,9 +1,6 @@
 package mosquitto;
 
-import fullSimulator.MyBuffer;
-import fullSimulator.simulator.Buffer;
 import fullSimulator.simulator.Measurement;
-import fullSimulator.simulator.PM10Simulator;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -11,8 +8,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
 
+import static cleaningRobots.RobotClient.*;
+
 /**
- * robots publish air pollution levels
+ * Robots publish averages of air pollution levels
  */
 public class RobotPub {
 
@@ -21,6 +20,9 @@ public class RobotPub {
     private final String robotId;
     private final String topic;
     int qos = 2;
+
+
+    private final String whichRobotIs;
 
     MqttConnectOptions connOpts;
 
@@ -34,6 +36,8 @@ public class RobotPub {
         this.robotId = MqttClient.generateClientId();
         this.topic  = "greenfield/district" +nDistrict; // + nDistrict; in constructor add district
 
+        this.whichRobotIs = getExistingRobots().getRobotById(getNewR()[0].getId()).getId();
+
         client = new MqttClient(broker, robotId);
         this.connOpts = new MqttConnectOptions();
         connOpts.setCleanSession(true);
@@ -42,27 +46,29 @@ public class RobotPub {
 
     public void publishing() throws MqttException {
 
-
         // Connect the client
         System.out.println(robotId + " Connecting Broker " + broker);
         client.connect(connOpts);
         System.out.println(robotId + " Connected");
 
-        //String payload = String.valueOf(0 + (Math.random() * 10)); // create a random number between 0 and 10
+        String whatToSend = ("Robot "+ this.whichRobotIs + " => "+ getAvgToSendThroughMQTT().toString());
 
-        String realTrying_AirPollutionLevel = ("    !!!You need here the list of the averages!!!");
-
-        MqttMessage message = new MqttMessage( );
+        MqttMessage message = new MqttMessage(whatToSend.getBytes());
 
         // Set the QoS on the Message
-        message.setQos(qos);
-        System.out.println(robotId + " Publishing THE LIST OF AVERAGES: " + realTrying_AirPollutionLevel + " ...");
-        client.publish(topic, message);
-        System.out.println(robotId + " Message published");
 
+        message.setQos(qos);
+
+        System.out.println(robotId + " publishing the list of averages: " + whatToSend);
+        client.publish(topic, message);
+        System.out.println(robotId + ": " + whichRobotIs +" published the message");
+
+        /** ONLY IF THE ROBOT IS DEAD*/
+        /**
         if (client.isConnected())
             client.disconnect();
-        System.out.println("Publisher " + robotId + " disconnected");
+        System.out.println("Publisher " + robotId + ": " + whichRobotIs + " disconnected");
+         */
 
     }
 

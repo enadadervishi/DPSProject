@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import java.sql.Timestamp;
 import java.util.Scanner;
 
+
 /**
  * Admin is subscribed to cleaning robots publishing
  */
@@ -71,19 +72,11 @@ public class AdminSub {
         System.out.println(server + " Subscribed to topics : " + topic);
 
 
-        System.out.println("\n ***  Press a random key to exit *** \n");
-        Scanner command = new Scanner(System.in);
-        command.nextLine();
-        client.disconnect();
+        //System.out.println("\n ***  Press a random key to exit *** \n");
+        //Scanner command = new Scanner(System.in);
+        //command.nextLine();
 
+        /** USED TO DISCONNECT*/
+        //client.disconnect();
     }
-
-
-
-
-
-
-
-
-
 }
