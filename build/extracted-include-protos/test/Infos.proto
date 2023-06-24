@@ -1,0 +1,13 @@
+package proto;
+
+message Infos{
+
+  required string id = 1;
+  required int32 district = 2;
+
+
+
+
+
+
+}

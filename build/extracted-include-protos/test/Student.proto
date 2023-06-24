@@ -1,0 +1,22 @@
+package student;
+
+message Student{
+
+  required string name = 1;
+  required string surname = 2;
+  required int32 yearOfBirth= 3;
+
+  enum Sex {
+    MALE = 0;
+    FEMALE = 1;
+  }
+  optional Sex sex = 4;
+
+  message Exam {
+    required string examName = 1;
+    required int32 mark = 2;
+    required string dateOfVerbalisation = 3;
+  }
+
+  repeated Exam exam = 5;
+}
