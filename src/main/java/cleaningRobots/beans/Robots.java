@@ -1,5 +1,6 @@
 package cleaningRobots.beans;
 
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -133,7 +134,7 @@ public class Robots {
         //System.out.println("CHECK IF REMOVED: "+ robotsList);
     }
 
-    public String getAPLevelsRobot(String r){
+    public String getAPLevelsRobot(String r){ //ArrayList<Double>
         List<Robot> robotsCopy = getRobotsList();
         for(Robot w: robotsCopy)
             if(w.getId().equalsIgnoreCase(r))

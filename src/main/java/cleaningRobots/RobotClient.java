@@ -33,9 +33,9 @@ public class RobotClient {
     private static RobotPub robotPublisher;
     private static ArrayList<Measurement> measurementArrayList = new ArrayList<>();
     private static double averageOfAirPollution = 0;
-    private static Robots existingRobots = null;
+    //private static Robots existingRobots = null;
 
-    private static Robot[] newR= null;
+    private static Robot newR= null;
 
     private static ArrayList<Double> avgToSendThroughMQTT = new ArrayList<>();
 
@@ -44,10 +44,8 @@ public class RobotClient {
     }
 
     public RobotClient() {}
-    public static Robots getExistingRobots() {
-        return existingRobots;
-    }
-    public static Robot[] getNewR() {
+    //public static Robots getExistingRobots() {return existingRobots;}
+    public static Robot getNewR() {
         return newR;
     }
 
@@ -65,48 +63,51 @@ public class RobotClient {
         }
 
         //when IP address is correct then ask for signing in
-        newR = new Robot[]{robotClient.signIn(serverAdr)};
+        newR = robotClient.signIn(serverAdr);
 
         //now we have to check if in the serverAdd where this new robot wants to
         //be added there has already existed the same name
-        robotClient.response = getRequest(client, newR[0].getServerAddress()+getPath);
+        robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
         //Robots existingRobots = null;
         if (robotClient.response != null) {
-            existingRobots = robotClient.response.getEntity(Robots.class);
+
+            Robots.getInstance().setRobotsList(robotClient.response.getEntity(Robots.class).getRobotsList());//existingRobots = robotClient.response.getEntity(Robots.class);
+
             //robotClient.printAllRobots(existingRobots);
-            existingRobots.printAllRobots_Robots();
+            Robots.getInstance().printAllRobots_Robots();//existingRobots.printAllRobots_Robots();
         }
 
         //ask to put a valid ID until it is put
         boolean invalid_input = true;
         while(invalid_input) {
-            if (existingRobots != null) {
-                for(Robot w : existingRobots.getRobotsList()) {
-                    if(newR[0].getId().equals(w.getId())) {
+            if ( Robots.getInstance() != null) { //existingRobots
+                for(Robot w : Robots.getInstance().getRobotsList() ) { //existingRobots.getRobotsList()
+                    if(newR.getId().equals(w.getId())) {
                         System.out.println("    ID already used");
-                        newR[0] = robotClient.signIn(serverAdr);
+                        newR = robotClient.signIn(serverAdr);
                     }
                 }
             }
             //post the new robot
             invalid_input = false;
-            robotClient.postNewRobot(client,postPath, newR[0]);
+            robotClient.postNewRobot(client,postPath, newR);
         }
 
         //update the list of the existing robots
-        robotClient.response = getRequest(client, newR[0].getServerAddress()+getPath);
+        robotClient.response = getRequest(client, newR.getServerAddress()+getPath);
         if (robotClient.response != null) {
-            existingRobots = robotClient.response.getEntity(Robots.class);
+
+            Robots.getInstance().setRobotsList(robotClient.response.getEntity(Robots.class).getRobotsList());//existingRobots = robotClient.response.getEntity(Robots.class);
         }
 
         //welcoming message
-        System.out.println(newR[0].getId() +" WELCOME TO GREENFIELD!");
-        if (existingRobots != null) {
-            if(existingRobots.getRobotsList().isEmpty())
+        System.out.println(newR.getId() +" WELCOME TO GREENFIELD!");
+        if (Robots.getInstance() != null) { //existingRobots
+            if(Robots.getInstance().getRobotsList().isEmpty()) //existingRobots.getRobotsList()
                 System.out.println("You're the first cleaning robot of Greenfield");
             else{
                 System.out.println("Below a list of all cleaning robots in Greenfield");
-                existingRobots.printAllRobots_Robots();
+                Robots.getInstance().printAllRobots_Robots(); //existingRobots.printAllRobots_Robots();
                 //robotClient.printAllRobots(existingRobots);
             }
         }
@@ -145,7 +146,7 @@ public class RobotClient {
         };
     */
 
-        Buffer buff = new MyBuffer(measurementArrayList, averageOfAirPollution);
+        Buffer buff = new MyBuffer( measurementArrayList, averageOfAirPollution); //measurementArrayList
         PM10Simulator simulator = new PM10Simulator(buff);
         simulator.start(); //IN HERE THE THREAD RUNS AND ADDS VALUES TO THE BUFFER
 
@@ -161,11 +162,15 @@ public class RobotClient {
 
         /** HERE MOSQUITTO */
         while (true){
-            if (existingRobots != null) {
-                robotPublisher = new RobotPub(existingRobots.getRobotById(newR[0].getId()).getDistrict());
+            if (Robots.getInstance() != null) { //existingRobots
+                robotPublisher = new RobotPub(Robots.getInstance().getRobotById(newR.getId()).getDistrict()); //existingRobots.getRobotById(newR[0].getId()).getDistrict()
                 robotPublisher.publishing();
 
-                avgToSendThroughMQTT = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+
+                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!"+ Robots.getInstance().getRobotById(getNewR().getId()).getAvgPM10().toString());//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
+
+
+                avgToSendThroughMQTT = Robots.getInstance().getRobotById(getNewR().getId()).getAvgPM10(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
                 avgToSendThroughMQTT.clear();
             }
             Thread.sleep(15000);

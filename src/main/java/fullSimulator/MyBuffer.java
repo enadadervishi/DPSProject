@@ -1,5 +1,6 @@
 package fullSimulator;
 
+import cleaningRobots.beans.Robots;
 import fullSimulator.simulator.Buffer;
 import fullSimulator.simulator.Measurement;
 
@@ -56,7 +57,10 @@ public class MyBuffer implements Buffer {
         avg = avg/8;
         //System.out.println("Printing average: " + avg);
 
-        getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10().add(avg);
+
+        System.out.println("            MyBuffer: LET'S ADD AVERAGES TO EXISTING AVERAGES!!! ");
+
+        Robots.getInstance().getRobotById(getNewR().getId()).getAvgPM10().add(avg);//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10().add(avg);
         //averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
         //System.out.println("     List of averages: " + averageListToSend);
 

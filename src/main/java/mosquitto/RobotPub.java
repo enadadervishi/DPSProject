@@ -1,12 +1,10 @@
 package mosquitto;
 
-import fullSimulator.simulator.Measurement;
+import cleaningRobots.beans.Robots;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.util.ArrayList;
 
 import static cleaningRobots.RobotClient.*;
 
@@ -36,7 +34,8 @@ public class RobotPub {
         this.robotId = MqttClient.generateClientId();
         this.topic  = "greenfield/district" +nDistrict; // + nDistrict; in constructor add district
 
-        this.whichRobotIs = getExistingRobots().getRobotById(getNewR()[0].getId()).getId();
+
+        this.whichRobotIs = Robots.getInstance().getRobotById(getNewR().getId()).getId(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getId();
 
         client = new MqttClient(broker, robotId);
         this.connOpts = new MqttConnectOptions();
