@@ -3,8 +3,6 @@ package mosquitto;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.sql.Timestamp;
-import java.util.Scanner;
-
 
 /**
  * Admin is subscribed to cleaning robots publishing

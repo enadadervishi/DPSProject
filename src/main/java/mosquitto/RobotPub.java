@@ -27,8 +27,8 @@ public class RobotPub {
     MqttConnectOptions connOpts;
 
 
-    private static ArrayList<Measurement> realTrying_measurementArrayList = new ArrayList<>();
-    private static double realTrying_averageOfAirPollution = 0;
+    //private static ArrayList<Measurement> realTrying_measurementArrayList = new ArrayList<>();
+    //private static double realTrying_averageOfAirPollution = 0;
 
     public RobotPub(int nDistrict) throws MqttException {
 

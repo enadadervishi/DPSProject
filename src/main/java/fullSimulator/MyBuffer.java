@@ -13,12 +13,12 @@ public class MyBuffer implements Buffer {
     private ArrayList<Measurement> arrayList;
     private double avg;
 
-    private ArrayList<Double> averageListToSend;
+    //private ArrayList<Double> averageListToSend;
 
     public MyBuffer(ArrayList<Measurement> measurements, double res) {
         this.arrayList = measurements;
         this.avg = res;
-        this.averageListToSend = new ArrayList<>();
+        //this.averageListToSend = new ArrayList<>();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MyBuffer implements Buffer {
         //System.out.println("Printing average: " + avg);
 
         getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10().add(avg);
-        averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+        //averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
         //System.out.println("     List of averages: " + averageListToSend);
 
         arrayList = newArrayList;

@@ -200,7 +200,7 @@ public class RobotClient {
 
     public Robot signIn(String serverAdd) throws IOException {
         System.out.println("Enter a valid ID: ");
-        this.id = buff.readLine();
+        id = buff.readLine();
         System.out.println("Enter the PORT number: ");
         this.port = Integer.parseInt(buff.readLine());
         return new Robot(serverAdd, id, port);
