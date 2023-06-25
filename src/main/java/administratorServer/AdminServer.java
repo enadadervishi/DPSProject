@@ -16,7 +16,7 @@ public class AdminServer {
     private static final String HOST = "localhost";
     private static final int PORT = 8888;
 
-    public static void main(String[] args) throws IOException, MqttException, InterruptedException {
+    public static void main(String[] args) throws IOException, MqttException, InterruptedException, ClassNotFoundException {
 
 
         AdminSub serverSubscriber = new AdminSub();
@@ -28,6 +28,20 @@ public class AdminServer {
         System.out.println("Server started on: http://" +HOST+":"+PORT);
 
         serverSubscriber.subscription();
+
+
+        /** ATTEMPT TO EXTRACT VALUES FROM AN ARRAY */
+        /**
+        //System.out.println("    LET'S CAPIRE SE VA: " + serverSubscriber.getReceivedMessage());
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serverSubscriber.getReceivedMessage().getBytes());
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+
+            String[] trial_messArr = (String[]) objectInputStream.readObject();
+            System.out.println("    TRYING TO UNDERSTAND SE SI PUò DESERIALISEDDDDDDD!!!!!! " + trial_messArr.toString());
+
+         */
+        //System.out.println("    HERE THE NAME OF THE ROBOT CONNECTED" + Robots.getInstance().getAPLevelsRobot(serverSubscriber.getNameOfRobot()));
 
         // System.out.println("Hit any key to stop...");
         // System.in.read(); //remember to uncomment

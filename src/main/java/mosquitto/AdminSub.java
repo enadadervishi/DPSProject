@@ -18,6 +18,11 @@ public class AdminSub {
     MqttConnectOptions connOpts;
 
 
+    String receivedMessage;
+    public String getReceivedMessage() {
+        return receivedMessage;
+    }
+
     public AdminSub() throws MqttException {
 
         this.broker = "tcp://localhost:1883";
@@ -25,10 +30,14 @@ public class AdminSub {
         this.topic = "greenfield/#";
         this.qos = 2;
 
+        this.receivedMessage = null;
+
         this.client = new MqttClient(broker, server); //server -> AdminClient
         this.connOpts = new MqttConnectOptions();
         connOpts.setCleanSession(true);
+
     }
+
 
     public void subscription() throws MqttException{
 
@@ -36,14 +45,14 @@ public class AdminSub {
         System.out.println(server + " connecting to broker " + broker);
         client.connect(connOpts);
         System.out.println(server + " connected - Thread PID: " + Thread.currentThread().getId());
-
         // Callback
         client.setCallback(new MqttCallback() {
 
-            public void messageArrived(String topicWithDistrict, MqttMessage message) {
+            public void messageArrived(String topicWithDistrict, MqttMessage message) throws Exception {
                 // Called when a message arrives from the broker that matches any subscription made by the client
                 String time = new Timestamp(System.currentTimeMillis()).toString();
-                String receivedMessage = new String(message.getPayload());
+                receivedMessage = new String(message.getPayload()); //String
+
                 System.out.println(server +" Received a Message! - Callback - Thread PID: " + Thread.currentThread().getId() +
                         "\n\tTime:    " + time +
                         "\n\tTopic:   " + topicWithDistrict +

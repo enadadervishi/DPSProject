@@ -6,6 +6,8 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.Arrays;
+
 import static cleaningRobots.RobotClient.*;
 
 /**
@@ -50,17 +52,26 @@ public class RobotPub {
         client.connect(connOpts);
         System.out.println(robotId + " Connected");
 
-        String whatToSend = ("Robot "+ this.whichRobotIs + " => "+ getAvgToSendThroughMQTT().toString());
+        String[] trial_whatToSent = new String[2];
+        trial_whatToSent[0] = this.whichRobotIs;
+        trial_whatToSent[1] = getAvgToSendThroughMQTT().toString();
+        //String whatToSend = ("Robot "+ this.whichRobotIs + " => "+ getAvgToSendThroughMQTT().toString());
 
-        MqttMessage message = new MqttMessage(whatToSend.getBytes());
+        MqttMessage trial_message = new MqttMessage(Arrays.toString(trial_whatToSent).getBytes());
+        //MqttMessage message = new MqttMessage(whatToSend.getBytes());
 
         // Set the QoS on the Message
 
-        message.setQos(qos);
+        trial_message.setQos(qos);
+        //message.setQos(qos);
 
-        System.out.println(robotId + " publishing the list of averages: " + whatToSend);
-        client.publish(topic, message);
-        System.out.println(robotId + ": " + whichRobotIs +" published the message");
+
+        //System.out.println(robotId + " publishing the list of averages: " + whatToSend);
+
+        client.publish(topic, trial_message);
+        //client.publish(topic, message);
+
+        //System.out.println(robotId + ": " + whichRobotIs +" published the message");
 
         /** ONLY IF THE ROBOT IS DEAD*/
         /**

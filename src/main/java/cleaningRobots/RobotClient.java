@@ -167,8 +167,7 @@ public class RobotClient {
                 robotPublisher.publishing();
 
 
-                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!"+ Robots.getInstance().getRobotById(getNewR().getId()).getAvgPM10().toString());//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
-
+                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!"+ Robots.getInstance().getAPLevelsRobot(getNewR().getId()));//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
 
                 avgToSendThroughMQTT = Robots.getInstance().getRobotById(getNewR().getId()).getAvgPM10(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
                 avgToSendThroughMQTT.clear();
