@@ -19,8 +19,8 @@ pos 3, 2, 1, 0,... e cosi via metodo ad cazzum
 File protos are used to send infos to clients 
 
 ## BIG BIG ISSUE : mosquitto!!!
-c'è un problema. quando ricevo dal robot i valori dell'average non capidsco come poter salvarli in aggiunta a quelli
-precedenti. ovvero: in robot c'è una lista che contiene averages
+c'è un problema. quando ricevo dal robot i valori dell'average non capisco come poter salvarli in 
+aggiunta a quelli precedenti. ovvero: in robot c'è una lista che contiene averages
 dopodiche usando mqtt dei valori vengono inviati in piu al server. 
 questi valori dal server li voglio aggiungere alla lista della classe robot
 non riesco a farlo. ho problemi con "deserializzazione" dell'oggetto che viene mandato: 

@@ -1,6 +1,7 @@
 package mosquitto;
 
-import cleaningRobots.beans.Robots;
+import restAPI.RestClient;
+import restAPI.cleaningRobots.beans.Robots;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -8,12 +9,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.Arrays;
 
-import static cleaningRobots.RobotClient.*;
 
 /**
  * Robots publish averages of air pollution levels
  */
-public class RobotPub {
+public class RobotPub extends Thread {
 
     private final MqttClient client;
     private final String broker;
@@ -34,16 +34,17 @@ public class RobotPub {
 
         this.broker = "tcp://localhost:1883";
         this.robotId = MqttClient.generateClientId();
-        this.topic  = "greenfield/district" +nDistrict; // + nDistrict; in constructor add district
+        this.topic  = "greenfield/district" +nDistrict;
 
 
-        this.whichRobotIs = Robots.getInstance().getRobotById(getNewR().getId()).getId(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getId();
+        this.whichRobotIs = Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getId(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getId();
 
         client = new MqttClient(broker, robotId);
         this.connOpts = new MqttConnectOptions();
         connOpts.setCleanSession(true);
 
     }
+
 
     public void publishing() throws MqttException {
 
@@ -54,7 +55,7 @@ public class RobotPub {
 
         String[] trial_whatToSent = new String[2];
         trial_whatToSent[0] = this.whichRobotIs;
-        trial_whatToSent[1] = getAvgToSendThroughMQTT().toString();
+        trial_whatToSent[1] = MosquittoClient.getAvgToSend().toString();
         //String whatToSend = ("Robot "+ this.whichRobotIs + " => "+ getAvgToSendThroughMQTT().toString());
 
         MqttMessage trial_message = new MqttMessage(Arrays.toString(trial_whatToSent).getBytes());
@@ -80,6 +81,7 @@ public class RobotPub {
         System.out.println("Publisher " + robotId + ": " + whichRobotIs + " disconnected");
          */
 
-    }
+   }
+
 
 }

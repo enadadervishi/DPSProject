@@ -1,21 +1,45 @@
-Main.java
- Main
-fullSimulator/simulator/Measurement.java
- fullSimulator.simulator.Measurement
-requestHandler/RequestHandler.java
- requestHandler.RequestHandler
-cleaningRobots/beans/Robots.java
- cleaningRobots.beans.Robots
-exchangeOfInfo/BidirectionalService.java
- exchangeOfInfo.BidirectionalService
-cleaningRobots/beans/Robot.java
- cleaningRobots.beans.Robot
-fullSimulator/MyBuffer.java
- fullSimulator.MyBuffer
-fullSimulator/simulator/Buffer.java
- fullSimulator.simulator.Buffer
-fullSimulator/simulator/PM10Simulator.java
- fullSimulator.simulator.PM10Simulator
+mosquitto/fullSimulator/simulator/Simulator.java
+ mosquitto.fullSimulator.simulator.Simulator
+_main/AdminClient.java
+ _main.AdminClient
+restAPI/RestClient.java
+ restAPI.RestClient
+restAPI/RestServer.java
+ restAPI.RestServer
+restAPI/requestHandler/RequestHandler.java
+ restAPI.requestHandler.RequestHandler
+chatService/ChatServiceOuterClass.java
+ chatService.ChatServiceOuterClass
+ chatService.ChatServiceOuterClass$1
+ chatService.ChatServiceOuterClass$ChatMessage
+ chatService.ChatServiceOuterClass$ChatMessage$1
+ chatService.ChatServiceOuterClass$ChatMessage$Builder
+ chatService.ChatServiceOuterClass$ChatMessageOrBuilder
+_main/AdminServer.java
+ _main.AdminServer
+mosquitto/AdminSub.java
+ mosquitto.AdminSub
+ mosquitto.AdminSub$1
+restAPI/cleaningRobots/beans/Robot.java
+ restAPI.cleaningRobots.beans.Robot
+mosquitto/fullSimulator/simulator/Buffer.java
+ mosquitto.fullSimulator.simulator.Buffer
+chatService/ChatServiceGrpc.java
+ chatService.ChatServiceGrpc
+ chatService.ChatServiceGrpc$1
+ chatService.ChatServiceGrpc$ChatServiceBaseDescriptorSupplier
+ chatService.ChatServiceGrpc$ChatServiceBlockingStub
+ chatService.ChatServiceGrpc$ChatServiceFileDescriptorSupplier
+ chatService.ChatServiceGrpc$ChatServiceFutureStub
+ chatService.ChatServiceGrpc$ChatServiceImplBase
+ chatService.ChatServiceGrpc$ChatServiceMethodDescriptorSupplier
+ chatService.ChatServiceGrpc$ChatServiceStub
+ chatService.ChatServiceGrpc$MethodHandlers
+restAPI/cleaningRobots/beans/Robots.java
+ restAPI.cleaningRobots.beans.Robots
+grpcChat/ChatServiceImpl.java
+ grpcChat.ChatServiceImpl
+ grpcChat.ChatServiceImpl$1
 proto/InfosOuterClass.java
  proto.InfosOuterClass
  proto.InfosOuterClass$1
@@ -23,18 +47,24 @@ proto/InfosOuterClass.java
  proto.InfosOuterClass$Infos$1
  proto.InfosOuterClass$Infos$Builder
  proto.InfosOuterClass$InfosOrBuilder
-fullSimulator/simulator/Simulator.java
- fullSimulator.simulator.Simulator
-cleaningRobots/services/CleaningRobotsService.java
- cleaningRobots.services.CleaningRobotsService
-administratorClient/AdminClient.java
- administratorClient.AdminClient
+restAPI/cleaningRobots/services/CleaningRobotsService.java
+ restAPI.cleaningRobots.services.CleaningRobotsService
+Main.java
+ Main
+mosquitto/fullSimulator/simulator/Measurement.java
+ mosquitto.fullSimulator.simulator.Measurement
+mosquitto/fullSimulator/simulator/PM10Simulator.java
+ mosquitto.fullSimulator.simulator.PM10Simulator
+mosquitto/fullSimulator/MyBuffer.java
+ mosquitto.fullSimulator.MyBuffer
+grpcChat/ChatServer.java
+ grpcChat.ChatServer
+grpcChat/ChatClient.java
+ grpcChat.ChatClient
+ grpcChat.ChatClient$1
 mosquitto/RobotPub.java
  mosquitto.RobotPub
-cleaningRobots/RobotClient.java
- cleaningRobots.RobotClient
-administratorServer/AdminServer.java
- administratorServer.AdminServer
-mosquitto/AdminSub.java
- mosquitto.AdminSub
- mosquitto.AdminSub$1
+_main/RobotClient.java
+ _main.RobotClient
+mosquitto/MosquittoClient.java
+ mosquitto.MosquittoClient
