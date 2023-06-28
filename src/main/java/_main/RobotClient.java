@@ -6,7 +6,6 @@ import restAPI.cleaningRobots.beans.Robot;
 
 import grpcChat.ChatClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import proto.InfosOuterClass;
 import z_Ping.ClientPING;
 
 import java.io.IOException;

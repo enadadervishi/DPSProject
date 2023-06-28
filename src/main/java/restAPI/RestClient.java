@@ -8,6 +8,7 @@ import restAPI.cleaningRobots.beans.Robots;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static restAPI.requestHandler.RequestHandler.*;
@@ -22,6 +23,7 @@ public class RestClient {
 
     private static String id;
     private int port;
+    //private ArrayList<Double> aaaaa = new ArrayList<>();
 
     public RestClient(){}
 
@@ -72,7 +74,6 @@ public class RestClient {
         //update the list of the existing robots
         response = getRequest(client, newR.getServerAddress()+getPath);
         if (response != null) {
-
             Robots.getInstance().setRobotsList(response.getEntity(Robots.class).getRobotsList());//existingRobots = robotClient.response.getEntity(Robots.class);
         }
 
@@ -103,6 +104,8 @@ public class RestClient {
         id = buff.readLine();
         System.out.println("Enter the PORT number: ");
         this.port = Integer.parseInt(buff.readLine());
+
+
         return new Robot(serverAdd, id, port);
     }
 

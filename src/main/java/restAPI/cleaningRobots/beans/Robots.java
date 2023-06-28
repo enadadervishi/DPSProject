@@ -17,7 +17,7 @@ import java.util.*;
 public class Robots {
 
     @XmlElement(name="connected_cleaning_robots")
-    private List<Robot> robotsList;
+    private ArrayList<Robot> robotsList;
 
     public int[] getCounterForDistrict() {
         return counterForDistrict;
@@ -45,7 +45,7 @@ public class Robots {
         return new ArrayList<>(robotsList);
     }
 
-    public synchronized void setRobotsList(List<Robot> rList) {
+    public synchronized void setRobotsList(ArrayList<Robot> rList) {
         this.robotsList = rList;
     }
 
@@ -58,8 +58,10 @@ public class Robots {
             r.setDistrict(d);
             r.setCoordinates(assigningPosition(r.getDistrict()));
 
+
             System.out.println("POSITION: "+ Arrays.toString(r.getCoordinates()));
             System.out.println("DISTRICT: "+ r.getDistrict());
+
 
         }else {
             System.out.println("[from postRobot] NOT added");
@@ -155,7 +157,7 @@ public class Robots {
 
 
 
-    public synchronized boolean checkId(List<Robot> list, Robot newRobot){
+    public synchronized boolean checkId(ArrayList<Robot> list, Robot newRobot){
         for(Robot rob : list){
             if(rob.getId().equals(newRobot.getId()))
             {

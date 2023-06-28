@@ -1,7 +1,11 @@
 package restAPI.cleaningRobots.beans;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A cleaning robot is initialized by specifying:
@@ -24,12 +28,13 @@ public class Robot {
 
     public Robot() {}
 
-    public Robot(String serverAddress, String id, int port ) {
+    public Robot(String serverAddress, String id, int port) {
         this.serverAddress = serverAddress;
         this.id = id;
         this.port = port;
         this.coordinates = new int[2];
-        this.avgPM10 = new ArrayList<>();
+        this.avgPM10= new ArrayList<>();
+        this.avgPM10.add(0.01); //just to try! it works!!!!
     }
 
     public String getId() {
@@ -69,6 +74,7 @@ public class Robot {
         this.district = district;
     }
 
+
     public ArrayList<Double> getAvgPM10() {
         return avgPM10;
     }
@@ -76,5 +82,16 @@ public class Robot {
     public void setAvgPM10(ArrayList<Double> avgPM10) {
         this.avgPM10 = avgPM10;
     }
+
+    /**
+    public ArrayList<Double> getAvgPM10() {
+        return avgPM10;
+    }
+
+    public void setAvgPM10(ArrayList<Double> avgPM10) {
+        this.avgPM10 = avgPM10;
+    }
+
+     */
 
 }

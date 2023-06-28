@@ -24,6 +24,7 @@ public class CleaningRobotsService {
         return Response.ok().build();
     }
 
+
     @Path("remove")
     @DELETE
     @Consumes({"application/json", "application/xml"})
