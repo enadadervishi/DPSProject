@@ -142,6 +142,15 @@ public class Robots {
         return null;
     }
 
+    public synchronized ArrayList<Double> getListAPLevelsRobot(String r){
+        List<Robot> robotsCopy = getRobotsList();
+        for(Robot w: robotsCopy)
+            if(w.getId().equalsIgnoreCase(r))
+                return w.getAvgPM10();
+        return null;
+    }
+
+
     public synchronized boolean checkId(List<Robot> list, Robot newRobot){
         for(Robot rob : list){
             if(rob.getId().equals(newRobot.getId()))

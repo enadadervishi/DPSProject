@@ -4,13 +4,10 @@ import grpcChat.ChatServer;
 import mosquitto.AdminSub;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import restAPI.RestServer;
+import z_Ping.ServerPING;
 
 import java.io.IOException;
 
-/**
- * Check for the robot if:
- * ID is unique && Port is available (always actually) && IP address is available
- */
 public class AdminServer {
 
     public static void main(String[] args) throws IOException, MqttException, InterruptedException, ClassNotFoundException {
@@ -24,11 +21,15 @@ public class AdminServer {
         serverSubscriber.subscription();
 
         System.out.println("\n\n    LAUNCHING SERVER GRPC...");
-        ChatServer serverGrpc = new ChatServer();
-        serverGrpc.runGRPC();
+        //ChatServer serverGrpc = new ChatServer();
+        //serverGrpc.runGRPC();
+
+        ServerPING serverPING = new ServerPING();
+        /**WHEN READY ACTIVATE START PING*/
+        //serverPING.startPING();
+
 
         System.out.println("\n\n---------------SERVER IS READY---------------\n\n");
-
 
 
         /** ATTEMPT TO EXTRACT VALUES FROM AN ARRAY */

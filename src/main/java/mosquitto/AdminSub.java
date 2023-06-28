@@ -1,8 +1,11 @@
 package mosquitto;
 
+import _main.RobotClient;
 import org.eclipse.paho.client.mqttv3.*;
+import restAPI.cleaningRobots.beans.Robots;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Admin is subscribed to cleaning robots publishing
@@ -48,16 +51,30 @@ public class AdminSub {
         // Callback
         client.setCallback(new MqttCallback() {
 
-            public void messageArrived(String topicWithDistrict, MqttMessage message) throws Exception {
+            public void messageArrived(String topicWithDistrict, MqttMessage message){
                 // Called when a message arrives from the broker that matches any subscription made by the client
                 String time = new Timestamp(System.currentTimeMillis()).toString();
                 receivedMessage = new String(message.getPayload()); //String
+
+                /**
+                String[] valueArray = receivedMessage.split(" ");
+                ArrayList<Double> doubleList = new ArrayList<>();
+                for (int i = 1; i < valueArray.length; i++) {
+                    String str = valueArray[i];
+                    double value = Double.parseDouble(str);
+                    doubleList.add(value);
+                }
+
+                Robots.getInstance().getListAPLevelsRobot(valueArray[0]).addAll(doubleList);
+                System.out.println("    SERVER LET'S SEE THE VALUES"+ Robots.getInstance().getListAPLevelsRobot(valueArray[0]));
+                */
 
                 System.out.println(server +" Received a Message! - Callback - Thread PID: " + Thread.currentThread().getId() +
                         "\n\tTime:    " + time +
                         "\n\tTopic:   " + topicWithDistrict +
                         "\n\tAVERAGES OF THE AIR POLLUTION LEVELS: " + receivedMessage +
                         "\n\tQoS:     " + message.getQos() + "\n");
+
 
                 //System.out.println("\n ***  Press a random key to exit *** \n");
 

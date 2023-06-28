@@ -59,7 +59,8 @@ public class MyBuffer implements Buffer {
 
         System.out.println("            MyBuffer: LET'S ADD AVERAGES TO EXISTING AVERAGES!!! ");
 
-        Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10().add(avg);
+        Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()).add(avg);
+        //Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10().add(avg);
 
         //averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
         //System.out.println("     List of averages: " + averageListToSend);

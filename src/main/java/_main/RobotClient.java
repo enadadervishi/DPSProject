@@ -7,6 +7,7 @@ import restAPI.cleaningRobots.beans.Robot;
 import grpcChat.ChatClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import proto.InfosOuterClass;
+import z_Ping.ClientPING;
 
 import java.io.IOException;
 
@@ -40,17 +41,23 @@ public class RobotClient {
         /** HERE MOSQUITTO */
         trial_mosquitto.start();//trial_mosquitto.startPublishing();
 
+
         /** HERE GRPC WITH PROTO FILES */
+        //ChatClient trial_chatting = new ChatClient(RestClient.getNewR().getPort());
+        //trial_chatting.letsChat();
+
+        ClientPING clientPING = new ClientPING();
+        clientPING.startPING();
+
+
+        /**
         InfosOuterClass.Infos try_infos = InfosOuterClass.Infos.newBuilder()
                 .setId("Trying")
                 .setDistrict(3)
                 .build();
 
         System.out.println("                HERE PROTO FILE!!!! : "+ try_infos);
-
-        ChatClient trial_chatting = new ChatClient(RestClient.getNewR().getPort());
-        trial_chatting.letsChat();
-
+*/
         /*
         if(newR.getId().equals("eni"))
             Thread.sleep(10000);

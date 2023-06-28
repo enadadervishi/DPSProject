@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package example.ping;
+
+message PingMessage {
+  string id = 1;
+
+  /**
+  enum Message {
+    QUIT = 0;
+    FIX = 1;
+  }
+  Message message = 2; //"quit or fix"
+  */
+
+  string message = 2;
+  bool isAlive = 3; //1 is alive, 0 is dead
+  string position = 4;
+  int32 district = 5;
+  int32 port = 6;
+
+}
+
+service PingService {
+  rpc sendPing(stream PingMessage) returns (stream PingMessage) {}
+}

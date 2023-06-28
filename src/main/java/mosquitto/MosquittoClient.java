@@ -1,9 +1,7 @@
 package mosquitto;
 
 import mosquitto.fullSimulator.MyBuffer;
-import mosquitto.fullSimulator.simulator.Buffer;
-import mosquitto.fullSimulator.simulator.Measurement;
-import mosquitto.fullSimulator.simulator.PM10Simulator;
+import mosquitto.fullSimulator.simulator.*;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import restAPI.RestClient;
 import restAPI.cleaningRobots.beans.Robots;
@@ -49,8 +47,8 @@ public class MosquittoClient extends Thread {
                 } catch (MqttException e) {
                     throw new RuntimeException(e);
                 }
-
-                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!" + Robots.getInstance().getAPLevelsRobot(RestClient.getNewR().getId()));//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
+                //Robots.getInstance().getAPLevelsRobot(RestClient.getNewR().getId())
+                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!" + Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()));//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
 
                 avgToSend = Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
                 avgToSend.clear();
@@ -62,13 +60,11 @@ public class MosquittoClient extends Thread {
             }
         }
 
-
-
     }
 
 }
 
-//NON ANDAVA bene perche non mi faceva partire in contemporanea sia mosquitto sia grpc!!!!
+//NON ANDAVA bene perchè non mi faceva partire in contemporanea sia mosquitto sia grpc!!!!
 /**
  public void startPublishing() throws MqttException, InterruptedException {
 
