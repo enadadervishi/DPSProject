@@ -7,6 +7,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -53,24 +54,46 @@ public class RobotPub extends Thread {
         client.connect(connOpts);
         System.out.println(robotId + " Connected");
 
-        String[] trial_whatToSent = new String[2];
-        trial_whatToSent[0] = this.whichRobotIs;
-        trial_whatToSent[1] = MosquittoClient.getAvgToSend().toString();
-        //String whatToSend = ("Robot "+ this.whichRobotIs + " => "+ getAvgToSendThroughMQTT().toString());
+        //String[] trial_whatToSent = new String[2];
+        //trial_whatToSent[0] = this.whichRobotIs;
+        //trial_whatToSent[1] = MosquittoClient.getAvgToSend().toString();
+        ArrayList<Double> averageToBePublished = MosquittoClient.getAvgToSend();
+        ArrayList<String> trialtrial = new ArrayList<>();
+        for(Double a: averageToBePublished){
 
-        MqttMessage trial_message = new MqttMessage(Arrays.toString(trial_whatToSent).getBytes());
+            trialtrial.add(a.toString());
+        }
+        String stringAverages = String.join(" ", trialtrial).replaceAll(",", "");
+
+        System.out.println("GET AVERAGE TO SEND: "+ MosquittoClient.getAvgToSend() );
+
+        Robots.getInstance().getRobotById(RestClient.getNewR().getId()).setAvgPM10(MosquittoClient.getNewArrayToReplaceInAPLevels());
+        //Robots.getInstance().setListAPLevelsRobot(RestClient.getNewR().getId()).addAll(MosquittoClient.getAvgToSend());
+        /**ALTRA PROVA*/
+        //System.out.println("    PROVAAAA DEL NOVEEE: "+ Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()));
+        System.out.println("    PROVAAAA DEL NOVEEE: "+ Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10());
+
+        /**FINE*/
+
+        //String whatToSend = (this.whichRobotIs + " "+ MosquittoClient.getAvgToSend().toString());
+        String whatToSend_trial = (this.whichRobotIs + " "+ stringAverages);
+
+        //MqttMessage trial_message = new MqttMessage(Arrays.toString(trial_whatToSent).getBytes());
         //MqttMessage message = new MqttMessage(whatToSend.getBytes());
+        MqttMessage message_trial = new MqttMessage(whatToSend_trial.getBytes());
 
         // Set the QoS on the Message
 
-        trial_message.setQos(qos);
+        //trial_message.setQos(qos);
         //message.setQos(qos);
+        message_trial.setQos(qos);
 
 
         //System.out.println(robotId + " publishing the list of averages: " + whatToSend);
 
-        client.publish(topic, trial_message);
+        //client.publish(topic, trial_message);
         //client.publish(topic, message);
+        client.publish(topic, message_trial);
 
         //System.out.println(robotId + ": " + whichRobotIs +" published the message");
 

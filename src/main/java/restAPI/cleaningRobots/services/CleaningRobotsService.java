@@ -36,9 +36,10 @@ public class CleaningRobotsService {
     @GET
     @Produces({"application/json", "application/xml"})
     public Response getRobotAPLevels(@PathParam("robot") String name){
-        String APLevel = Robots.getInstance().getAPLevelsRobot(name);
-        if(APLevel!= null)
-            return Response.ok(APLevel).build();
+        Robot trying = Robots.getInstance().getRobotById(name);
+
+        if(trying!= null)
+            return Response.ok(trying).build();
         else
             return Response.status(Response.Status.NOT_FOUND).build();
     }

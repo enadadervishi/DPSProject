@@ -41,7 +41,7 @@ public class Robots {
         return instance;
     }
 
-    public synchronized List<Robot> getRobotsList() {
+    public synchronized ArrayList<Robot> getRobotsList() {
         return new ArrayList<>(robotsList);
     }
 
@@ -134,21 +134,25 @@ public class Robots {
         //System.out.println("CHECK IF REMOVED: "+ robotsList);
     }
 
+    /**
     public String getAPLevelsRobot(String r){ //ArrayList<Double>
         List<Robot> robotsCopy = getRobotsList();
         for(Robot w: robotsCopy)
             if(w.getId().equalsIgnoreCase(r))
                 return String.valueOf(w.getAvgPM10());
         return null;
-    }
+    }*/
 
+    /**
     public synchronized ArrayList<Double> getListAPLevelsRobot(String r){
-        List<Robot> robotsCopy = getRobotsList();
+        ArrayList<Robot> robotsCopy = getRobotsList();
         for(Robot w: robotsCopy)
             if(w.getId().equalsIgnoreCase(r))
                 return w.getAvgPM10();
         return null;
     }
+     */
+
 
 
     public synchronized boolean checkId(List<Robot> list, Robot newRobot){

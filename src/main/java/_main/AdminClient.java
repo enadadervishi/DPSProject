@@ -1,5 +1,6 @@
 package _main;
 
+import restAPI.cleaningRobots.beans.Robot;
 import restAPI.cleaningRobots.beans.Robots;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -60,7 +61,24 @@ public class AdminClient {
                     break;
                 case "2":
                     System.out.println("You want an average of Air Pollution levels by a specific Robot");
-                    choicePath = "/cleaning_robots/{robot}/air_pollution_level/"; //STILL NOT DEFINED
+
+                    //choicePath = "/cleaning_robots/get/{robot}/air_pollution_level/"; //STILL NOT DEFINED
+                    choicePath = "/cleaning_robots/get/enada/air_pollution_level/"; //STILL NOT DEFINED
+
+                    response = getRequest(client, serverAddress + choicePath);
+
+
+                    try {
+                        System.out.println(response.toString());
+                        Robot robotsResponse = response.getEntity(Robot.class);
+                        System.out.println("Average pollution of: "+ robotsResponse.getId() + " : "+ robotsResponse.getAvgPM10());
+
+
+                    } catch (NullPointerException e) {
+                        System.out.println("response: " + response);
+                    }
+
+
 
                     break;
                 case "3":

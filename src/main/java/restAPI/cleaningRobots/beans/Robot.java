@@ -20,7 +20,7 @@ public class Robot {
     private int[] coordinates;
     private int district;
 
-    private ArrayList<Double> avgPM10 = new ArrayList<>();
+    private ArrayList<Double> avgPM10;
 
     public Robot() {}
 
@@ -29,6 +29,7 @@ public class Robot {
         this.id = id;
         this.port = port;
         this.coordinates = new int[2];
+        this.avgPM10 = new ArrayList<>();
     }
 
     public String getId() {

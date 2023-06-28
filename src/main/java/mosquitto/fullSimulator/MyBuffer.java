@@ -57,15 +57,28 @@ public class MyBuffer implements Buffer {
         //System.out.println("Printing average: " + avg);
 
 
-        System.out.println("            MyBuffer: LET'S ADD AVERAGES TO EXISTING AVERAGES!!! ");
+        /**ALTRA PROVA DI NUOVO */
+        //System.out.println("            [MyBuffer]: LET'S ADD AVERAGES TO EXISTING AVERAGES!!! "
+               // + Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()));
 
-        Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()).add(avg);
+        System.out.println("            [MyBuffer]: LET'S ADD AVERAGES TO EXISTING AVERAGES!!! "
+                + Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10());
+
+        /**FINE*/
+
+        /**DI NUOVO*/
+        //Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()).add(avg);
+        Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10().add(avg);
+
+        /**FINE*/
         //Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10().add(avg);
 
         //averageListToSend = getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
         //System.out.println("     List of averages: " + averageListToSend);
 
         arrayList = newArrayList;
+        System.out.println("[MyBuffer]: Printing the arrayList" + arrayList);
+        System.out.println("[MyBuffer]: Printing the newArrayList" + newArrayList);
         return arrayList;
     }
 

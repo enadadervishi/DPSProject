@@ -21,6 +21,11 @@ public class MosquittoClient extends Thread {
 
     private static ArrayList<Double> avgToSend = new ArrayList<>();
 
+    public static ArrayList<Double> getNewArrayToReplaceInAPLevels() {
+        return newArrayToReplaceInAPLevels;
+    }
+    private static ArrayList<Double> newArrayToReplaceInAPLevels = new ArrayList<>();
+
 
     public MosquittoClient(){}
 
@@ -39,19 +44,30 @@ public class MosquittoClient extends Thread {
             if (Robots.getInstance() != null) { //existingRobots
                 try {
                     robotPublisher = new RobotPub(Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getDistrict()); //existingRobots.getRobotById(newR[0].getId()).getDistrict()
-                } catch (MqttException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
                     robotPublisher.publishing();
+
                 } catch (MqttException e) {
                     throw new RuntimeException(e);
                 }
                 //Robots.getInstance().getAPLevelsRobot(RestClient.getNewR().getId())
-                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!" + Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()));//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
 
+                /**PROVA UNO*/
+                //System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!" + Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()));//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
+                System.out.println("    LIST OF ALL AVERAGES BY ONE ROBOT!!!!!!!!!!" + Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10());//getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10()
+
+                /**FINE*/
+
+                /**PROVA DUE */
+                //newArrayToReplaceInAPLevels = Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+                newArrayToReplaceInAPLevels = Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
+                /**FINE*/
+
+
+                /**PROVA TRE*/
+                //avgToSend = Robots.getInstance().getListAPLevelsRobot(RestClient.getNewR().getId()); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
                 avgToSend = Robots.getInstance().getRobotById(RestClient.getNewR().getId()).getAvgPM10(); //getExistingRobots().getRobotById(getNewR()[0].getId()).getAvgPM10();
                 avgToSend.clear();
+                /**FINE*/
             }
             try {
                 Thread.sleep(15000);
